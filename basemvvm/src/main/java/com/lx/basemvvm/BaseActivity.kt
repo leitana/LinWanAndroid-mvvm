@@ -1,0 +1,17 @@
+package com.lx.basemvvm
+
+import androidx.appcompat.app.AppCompatActivity
+
+/**
+ * @title：BaseActivity
+ * @projectName LinWanAndroid-mvvm
+ * @description: <Description>
+ * @author linxiao
+ * @data Created in 2021/03/26
+ */
+abstract class BaseActivity : AppCompatActivity(){
+
+    abstract fun getLaytouResId(): Int
+    abstract fun initView()
+    abstract fun initData()
+}
