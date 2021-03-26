@@ -1,5 +1,6 @@
 package com.lx.basemvvm
 
+import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 
 /**
@@ -10,6 +11,13 @@ import androidx.appcompat.app.AppCompatActivity
  * @data Created in 2021/03/26
  */
 abstract class BaseActivity : AppCompatActivity(){
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(getLaytouResId())
+        initView()
+        initData()
+    }
 
     abstract fun getLaytouResId(): Int
     abstract fun initView()
