@@ -1,11 +1,14 @@
 package com.lx.linwanandroid_mvvm.net
 
-import com.lx.linwanandroid_mvvm.net.interceptor.HeaderInterceptor
+import com.franmontiel.persistentcookiejar.PersistentCookieJar
+import com.franmontiel.persistentcookiejar.cache.SetCookieCache
+import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor
 import com.lx.linwanandroid_mvvm.App
 import com.lx.linwanandroid_mvvm.BuildConfig
 import com.lx.linwanandroid_mvvm.api.ApiService
 import com.lx.linwanandroid_mvvm.constant.Constant
 import com.lx.linwanandroid_mvvm.net.interceptor.CacheInterceptor
+import com.lx.linwanandroid_mvvm.net.interceptor.HeaderInterceptor
 import com.lx.linwanandroid_mvvm.net.interceptor.SaveCookieInterceptor
 import okhttp3.Cache
 import okhttp3.OkHttpClient
@@ -25,7 +28,12 @@ import java.util.concurrent.TimeUnit
  */
 object RetrofitHelper {
 
-    const val DEFAULT_TIMEOUT: Long = 15
+    /**Cookie*/
+    private val cookiePersistor = SharedPrefsCookiePersistor(App.context)
+    private val cookieJar = PersistentCookieJar(SetCookieCache(), cookiePersistor)
+
+
+    private const val DEFAULT_TIMEOUT: Long = 15
 
     private var retrofit: Retrofit? = null
 
@@ -62,7 +70,8 @@ object RetrofitHelper {
             addInterceptor(httpLoggingInterceptor)
             addInterceptor(HeaderInterceptor())
             addInterceptor(SaveCookieInterceptor())
-            addInterceptor(CacheInterceptor())
+//            addInterceptor(CacheInterceptor())
+            cookieJar(cookieJar)
             cache(cache)
             connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS)
             readTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS)
@@ -71,5 +80,11 @@ object RetrofitHelper {
         }
         return builder.build()
     }
+
+    /**清除Cookie*/
+    fun clearCookie() = cookieJar.clear()
+
+    /**是否有Cookie*/
+    fun hasCookie() = cookiePersistor.loadAll().isNotEmpty()
 
 }
