@@ -16,6 +16,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <provider
+            android:name=".utils.ContextProvider"
+            android:authorities="${applicationId}.contextprovider"
+            android:exported="false" />
+
     </application>
 
 </manifest>
