@@ -1,4 +1,4 @@
-package com.lx.basemvvm
+package com.lx.linwanandroid_mvvm.base
 
 import android.os.Bundle
 import androidx.annotation.LayoutRes

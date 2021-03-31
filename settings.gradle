@@ -1,3 +1,2 @@
-include ':basemvvm'
 include ':app'
 rootProject.name = "LinWanAndroid-mvvm"
