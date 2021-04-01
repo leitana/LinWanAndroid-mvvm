@@ -3,10 +3,13 @@ package com.lx.linwanandroid_mvvm.base
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.lx.linwanandroid_mvvm.constant.Constant
 import com.lx.linwanandroid_mvvm.ext.showToast
 import com.lx.linwanandroid_mvvm.model.exception.ApiException
 import com.lx.linwanandroid_mvvm.model.exception.ApiStatus
 import com.lx.linwanandroid_mvvm.model.exception.ExceptionHandle
+import com.lx.linwanandroid_mvvm.net.RetrofitHelper
+import com.lx.linwanandroid_mvvm.utils.Preference
 import com.lx.linwanandroid_mvvm.utils.context
 import kotlinx.coroutines.*
 
@@ -80,7 +83,9 @@ abstract class BaseViewModel: ViewModel() {
             is ApiException -> {
                 when(e.code){
                     ApiStatus.TOKEN_INVALID -> {
-                        // TODO:登录失效，清除用户信息、清除cookie/token
+                        Preference.clearPreference(Constant.USERNAME_KEY)
+                        Preference.clearPreference(Constant.PASSWORD_KEY)
+                        RetrofitHelper.clearCookie()
                     }
                     // 其他错误
                     else -> if (showErrorToast) context().showToast(ExceptionHandle.handleException(e))
