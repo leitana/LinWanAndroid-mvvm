@@ -26,20 +26,6 @@ typealias Error = suspend (Exception) -> Unit
 typealias Cancel = suspend (Exception) -> Unit
 
 abstract class BaseViewModel: ViewModel() {
-    open class UiStates<T> (
-        val isLoading: Boolean = false,
-        val isRefresh: Boolean = false,
-        val isSuccess: T? = null,
-        val isError: Boolean = false
-    )
-
-    open class BaseUiMode<T> (
-        var showLoading: Boolean = false,
-        var showError: String? = null,
-        var showSuccess: T? = null,
-        var showEnd: Boolean = false, //加载更多
-        var isRefresh: Boolean = false  //刷新
-    )
 
     val mExpectation: MutableLiveData<Throwable> = MutableLiveData()
 

@@ -23,8 +23,8 @@ class HeaderInterceptor: Interceptor {
 
         builder.addHeader("Content-type", "application/json; charset=utf-8")
 
-        val domain = request.url().host()
-        val url = request.url().toString()
+        val domain = request.url.host
+        val url = request.url.toString()
         if (domain.isNotEmpty() && (url.contains(HttpConstant.COLLECTIONS_WEBSITE)
                     || url.contains(HttpConstant.UNCOLLECTIONS_WEBSITE)
                     || url.contains(HttpConstant.ARTICLE_WEBSITE)
