@@ -14,11 +14,11 @@ import com.lx.linwanandroid_mvvm.utils.Preference
  * @author linxiao
  * @data Created in 2021/04/04
  */
-class LoginViewModel: BaseViewModel() {
+class LoginViewModel : BaseViewModel() {
 
     private val loginRepository by lazy { LoginRepository() }
 
-    enum class UiState{
+    enum class UiState {
         Success, Error, Logining
     }
 
@@ -29,32 +29,40 @@ class LoginViewModel: BaseViewModel() {
     private var user: String by Preference(Constant.USERNAME_KEY, "")
     private var pwd: String by Preference(Constant.PASSWORD_KEY, "")
 
-    private var isEnable: MutableLiveData<Boolean> = MutableLiveData(false)
+    var isEnable: MutableLiveData<Boolean> = MutableLiveData(false)
 
 
     private val _uiState = MutableLiveData<UiState>()
-    val uiState : LiveData<UiState> = _uiState
+    val uiState: LiveData<UiState> = _uiState
 
-    private fun isInputValid(userName: String, passWord: String) = userName.isNotBlank() && passWord.isNotBlank()
+    private fun isInputValid(userName: String, passWord: String) =
+        userName.isNotBlank() && passWord.isNotBlank()
 
-    fun login() {
-        _uiState.value = UiState.Logining
-        launch(
-            block = {
-                val userInfo = loginRepository.login(userName.value ?: "", password.value ?: "")
-                user = userInfo.username!!
-                pwd = userInfo.password!!
-                isLogin = true
-                _uiState.value = UiState.Success
-            },
-            error = {
-                val str = it.message
-                _uiState.value = UiState.Error
-            }
-        )
+    fun initAccount(){
+        userName.value = user
+        password.value = pwd
     }
 
-    fun inputChanged(){
+    fun login() {
+        if (isEnable.value == true) {
+            _uiState.value = UiState.Logining
+            launch(
+                block = {
+                    val userInfo = loginRepository.login(userName.value ?: "", password.value ?: "")
+                    user = userInfo.username!!
+                    pwd = userInfo.password!!
+                    isLogin = true
+                    _uiState.value = UiState.Success
+                },
+                error = {
+                    val str = it.message
+                    _uiState.value = UiState.Error
+                }
+            )
+        }
+    }
+
+    fun inputChanged() {
         isEnable.value = isInputValid(userName.value ?: "", password.value ?: "")
     }
 

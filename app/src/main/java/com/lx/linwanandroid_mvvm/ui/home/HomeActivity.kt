@@ -1,6 +1,8 @@
 package com.lx.linwanandroid_mvvm.ui.home
 
+import com.lx.linwanandroid_mvvm.R
 import com.lx.linwanandroid_mvvm.base.BaseVMActivity
+import com.lx.linwanandroid_mvvm.databinding.ActivityHomeBinding
 
 /**
  * @title：HomeActivity
@@ -10,15 +12,18 @@ import com.lx.linwanandroid_mvvm.base.BaseVMActivity
  * @data Created in 2021/04/06
  */
 class HomeActivity: BaseVMActivity(){
+
+    private val binding by binding<ActivityHomeBinding>(R.layout.activity_home)
+
     override fun initView() {
-        TODO("Not yet implemented")
+        binding.run {
+
+        }
     }
 
     override fun initData() {
-        TODO("Not yet implemented")
     }
 
     override fun startObserve() {
-        TODO("Not yet implemented")
     }
 }
