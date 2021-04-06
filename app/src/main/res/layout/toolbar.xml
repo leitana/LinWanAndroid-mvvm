@@ -3,9 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+        <import type="com.lx.linwanandroid_mvvm.model.bean.Title"/>
+
         <variable
             name="title"
-            type="com.lx.linwanandroid_mvvm.model.bean.Title" />
+            type="Title" />
     </data>
 
     <com.google.android.material.appbar.AppBarLayout
@@ -28,9 +30,13 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="marquee"
                 android:singleLine="true"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textSize="18sp"
-                android:visibility="gone" />
+                android:text="@{title.title}" />
         </androidx.appcompat.widget.Toolbar>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_1"
+            android:background="@color/Grey700"/>
     </com.google.android.material.appbar.AppBarLayout>
 </layout>

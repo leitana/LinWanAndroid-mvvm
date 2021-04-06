@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/tools">
 
     <data>
+        <import type="com.lx.linwanandroid_mvvm.model.bean.Title"/>
+
         <variable
             name="viewModel"
             type="com.lx.linwanandroid_mvvm.ui.login.LoginViewModel" />
+
+        <variable
+            name="title"
+            type="Title" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -15,7 +22,8 @@
 
         <include
             android:id="@+id/titleBar"
-            layout="@layout/toolbar" />
+            layout="@layout/toolbar"
+            bind:title="@{title}"/>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLayoutUser"
@@ -72,12 +80,12 @@
 
         <Button
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/dp_50"
             android:layout_marginStart="30dp"
             android:layout_marginTop="60dp"
             android:layout_marginEnd="30dp"
             android:text="@string/login"
-            android:textColor="@color/Black"
+            android:textColor="@color/white"
             app:layout_constraintTop_toBottomOf="@+id/textInputLayoutPwd"
             android:onClick="@{()->viewModel.login()}"/>
 

@@ -4,6 +4,7 @@ import com.lx.linwanandroid_mvvm.R
 import com.lx.linwanandroid_mvvm.base.BaseVMActivity
 import com.lx.linwanandroid_mvvm.databinding.ActivityLoginBinding
 import com.lx.linwanandroid_mvvm.ext.showToast
+import com.lx.linwanandroid_mvvm.model.bean.Title
 import com.lx.linwanandroid_mvvm.utils.DialogUtil
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -26,7 +27,7 @@ class LoginActivity : BaseVMActivity(){
     override fun initView() {
         binding.run {
             viewModel = loginViewModel
-//            title = Title("登录")
+            title = Title("登录")
         }
     }
 
