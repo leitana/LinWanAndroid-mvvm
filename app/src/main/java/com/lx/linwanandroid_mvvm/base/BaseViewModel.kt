@@ -77,6 +77,9 @@ abstract class BaseViewModel: ViewModel() {
                     else -> if (showErrorToast) context().showToast(ExceptionHandle.handleException(e))
                 }
             }
+
+            else ->
+                if (showErrorToast) context().showToast(ExceptionHandle.handleException(e))
         }
     }
 }

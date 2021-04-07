@@ -2,10 +2,17 @@ package com.lx.linwanandroid_mvvm.ui.login
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.lx.linwanandroid_mvvm.base.BaseViewModel
 import com.lx.linwanandroid_mvvm.constant.Constant
+import com.lx.linwanandroid_mvvm.model.api.onError
+import com.lx.linwanandroid_mvvm.model.api.onSuccess
 import com.lx.linwanandroid_mvvm.model.bean.Login
 import com.lx.linwanandroid_mvvm.utils.Preference
+import kotlinx.coroutines.flow.cancellable
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.launch
 
 /**
  * @title：LoginViewModel
@@ -31,6 +38,9 @@ class LoginViewModel : BaseViewModel() {
 
     var isEnable: MutableLiveData<Boolean> = MutableLiveData(false)
 
+    private val _failure = MutableLiveData<String>()
+    val failure = _failure
+
 
     private val _uiState = MutableLiveData<UiState>()
     val uiState: LiveData<UiState> = _uiState
@@ -45,20 +55,38 @@ class LoginViewModel : BaseViewModel() {
 
     fun login() {
         if (isEnable.value == true) {
-            _uiState.value = UiState.Logining
-            launch(
-                block = {
-                    val userInfo = loginRepository.login(userName.value ?: "", password.value ?: "")
-                    user = userInfo.username!!
-                    pwd = userInfo.password!!
-                    isLogin = true
-                    _uiState.value = UiState.Success
-                },
-                error = {
-                    val str = it.message
-                    _uiState.value = UiState.Error
-                }
-            )
+//            _uiState.value = UiState.Logining
+//            launch(
+//                block = {
+//                    val userInfo = loginRepository.login(userName.value ?: "", password.value ?: "")
+//                    user = userInfo.username!!
+//                    pwd = userInfo.password!!
+//                    isLogin = true
+//                    _uiState.value = UiState.Success
+//                },
+//                error = {
+////                    val str = it.message
+//                    _uiState.value = UiState.Error
+//                }
+//            )
+
+            //flow
+            viewModelScope.launch {
+                loginRepository.loginByFlow(userName.value ?: "", password.value ?: "")
+                    .collectLatest{ it ->
+                        it?.onSuccess { login ->
+                            user = login.username!!
+                            pwd = login.password!!
+                            isLogin = true
+                            _uiState.value = UiState.Success
+                        }
+                        it?.onError { str ->
+                            _failure.value = str
+                            _uiState.value = UiState.Error
+                        }
+                    }
+            }
+
         }
     }
 

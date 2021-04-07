@@ -57,7 +57,8 @@ class LoginActivity : BaseVMActivity(){
 
                     LoginViewModel.UiState.Error -> {
                         dismissDialog()
-                        showToast("登录失败")
+//                        showToast("登录失败")
+                        failure.value?.let { it1 -> showToast(it1) }
                     }
                 }
             })
