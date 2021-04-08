@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import com.lx.linwanandroid_mvvm.R
+import com.lx.linwanandroid_mvvm.constant.Constant
+import com.lx.linwanandroid_mvvm.utils.Preference
 import com.lx.linwanandroid_mvvm.utils.StatusBarUtil
 
 /**
@@ -16,6 +18,8 @@ import com.lx.linwanandroid_mvvm.utils.StatusBarUtil
  * @data Created in 2021/03/26
  */
 abstract class BaseVMActivity : AppCompatActivity(){
+
+    val mThemeColor: Int by Preference(Constant.THEME_COLOR, -1)
 
     protected inline fun <reified T: ViewDataBinding> binding(@LayoutRes resId: Int): Lazy<T> = lazy {
         DataBindingUtil.setContentView<T>(this, resId).apply {

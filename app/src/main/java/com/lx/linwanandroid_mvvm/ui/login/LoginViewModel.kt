@@ -55,37 +55,37 @@ class LoginViewModel : BaseViewModel() {
 
     fun login() {
         if (isEnable.value == true) {
-//            _uiState.value = UiState.Logining
-//            launch(
-//                block = {
-//                    val userInfo = loginRepository.login(userName.value ?: "", password.value ?: "")
-//                    user = userInfo.username!!
-//                    pwd = userInfo.password!!
-//                    isLogin = true
-//                    _uiState.value = UiState.Success
-//                },
-//                error = {
-////                    val str = it.message
-//                    _uiState.value = UiState.Error
-//                }
-//            )
+            _uiState.value = UiState.Logining
+            launch(
+                block = {
+                    val userInfo = loginRepository.login(userName.value ?: "", password.value ?: "")
+                    user = userInfo.username!!
+                    pwd = userInfo.password!!
+                    isLogin = true
+                    _uiState.value = UiState.Success
+                },
+                error = {
+//                    val str = it.message
+                    _uiState.value = UiState.Error
+                }
+            )
 
             //flow
-            viewModelScope.launch {
-                loginRepository.loginByFlow(userName.value ?: "", password.value ?: "")
-                    .collectLatest{ it ->
-                        it?.onSuccess { login ->
-                            user = login.username!!
-                            pwd = login.password!!
-                            isLogin = true
-                            _uiState.value = UiState.Success
-                        }
-                        it?.onError { str ->
-                            _failure.value = str
-                            _uiState.value = UiState.Error
-                        }
-                    }
-            }
+//            viewModelScope.launch {
+//                loginRepository.loginByFlow(userName.value ?: "", password.value ?: "")
+//                    .collectLatest{ it ->
+//                        it?.onSuccess { login ->
+//                            user = login.username!!
+//                            pwd = login.password!!
+//                            isLogin = true
+//                            _uiState.value = UiState.Success
+//                        }
+//                        it?.onError { str ->
+//                            _failure.value = str
+//                            _uiState.value = UiState.Error
+//                        }
+//                    }
+//            }
 
         }
     }

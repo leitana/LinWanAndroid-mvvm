@@ -15,4 +15,6 @@ object Constant {
     const val PASSWORD_KEY = "password"
 
     const val BASE_URL = "https://www.wanandroid.com/"
+
+    const val THEME_COLOR = "theme_color"
 }

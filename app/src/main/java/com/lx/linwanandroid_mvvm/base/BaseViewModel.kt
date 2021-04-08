@@ -1,5 +1,6 @@
 package com.lx.linwanandroid_mvvm.base
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -12,6 +13,7 @@ import com.lx.linwanandroid_mvvm.net.RetrofitHelper
 import com.lx.linwanandroid_mvvm.utils.Preference
 import com.lx.linwanandroid_mvvm.utils.context
 import kotlinx.coroutines.*
+import org.jetbrains.annotations.NotNull
 
 /**
  * @title：BaseViewModel
