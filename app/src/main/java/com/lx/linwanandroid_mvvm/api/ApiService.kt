@@ -1,10 +1,10 @@
 package com.lx.linwanandroid_mvvm.api
 
 import com.lx.linwanandroid_mvvm.model.api.ApiResponse
+import com.lx.linwanandroid_mvvm.model.bean.HomeArticle
 import com.lx.linwanandroid_mvvm.model.bean.Login
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
-import retrofit2.http.POST
+import io.reactivex.Observable
+import retrofit2.http.*
 
 /**
  * @title：ApiService
@@ -25,4 +25,12 @@ interface ApiService {
     suspend fun login(
             @Field("username") username: String,
             @Field("password") password: String): ApiResponse<Login>
+
+    /**
+     * 获取文章列表
+     * http://www.wanandroid.com/article/list/0/json
+     * [pageNum]
+     */
+    @GET("article/list/{pageNum}/json")
+    suspend fun getArticles(@Path("pageNum") pageNum: Int): ApiResponse<HomeArticle>
 }

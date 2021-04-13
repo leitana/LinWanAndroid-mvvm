@@ -6,7 +6,7 @@ import com.lx.linwanandroid_mvvm.base.BaseVMActivity
 import com.lx.linwanandroid_mvvm.databinding.ActivityLoginBinding
 import com.lx.linwanandroid_mvvm.ext.showToast
 import com.lx.linwanandroid_mvvm.model.bean.Title
-import com.lx.linwanandroid_mvvm.ui.home.HomeActivity
+import com.lx.linwanandroid_mvvm.ui.main.MainActivity
 import com.lx.linwanandroid_mvvm.utils.DialogUtil
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -51,7 +51,7 @@ class LoginActivity : BaseVMActivity(){
                     LoginViewModel.UiState.Success -> {
                         dismissDialog()
                         showToast("登陆成功...")
-                        startActivity(Intent(this@LoginActivity, HomeActivity::class.java))
+                        startActivity(Intent(this@LoginActivity, MainActivity::class.java))
                         finish()
                     }
 

@@ -1,4 +1,4 @@
-package com.lx.linwanandroid_mvvm.ui.home
+package com.lx.linwanandroid_mvvm.ui.main
 
 import android.content.Context
 import android.content.res.ColorStateList
@@ -16,10 +16,10 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
  * @author linxiao
  * @data Created in 2021/04/06
  */
-class HomeActivity: BaseVMActivity(){
+class MainActivity: BaseVMActivity(){
 
     private val binding by binding<ActivityHomeBinding>(R.layout.activity_home)
-    private val homeViewModel by viewModel<HomeViewModel>()
+    private val homeViewModel by viewModel<MainViewModel>()
 
     override fun initView() {
         binding.run {
@@ -27,7 +27,7 @@ class HomeActivity: BaseVMActivity(){
 
             drawerLayout.run {
                 val toggle = ActionBarDrawerToggle(
-                    this@HomeActivity,
+                    this@MainActivity,
                     this,
                     icToolbar.toolbar,
                     R.string.navigation_drawer_open,
@@ -48,8 +48,8 @@ class HomeActivity: BaseVMActivity(){
     }
 
     private fun initNavView() {
-        binding.bottomNavigation.itemIconTintList = createColorStateList(this@HomeActivity, mThemeColor)
-        binding.bottomNavigation.itemTextColor = createColorStateList(this@HomeActivity, mThemeColor)
+        binding.bottomNavigation.itemIconTintList = createColorStateList(this@MainActivity, mThemeColor)
+        binding.bottomNavigation.itemTextColor = createColorStateList(this@MainActivity, mThemeColor)
     }
 
     /**

@@ -86,4 +86,9 @@ dependencies {
     implementation "org.koin:koin-androidx-viewmodel:$koin_version"
     //or Koin for Andorid Fragment Factory(unstable version)
     implementation "org.koin:koin-androidx-fragment:$koin_version"
+
+    //加载等待动画
+    implementation 'com.github.ybq:Android-SpinKit:1.4.0'
+
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
 }

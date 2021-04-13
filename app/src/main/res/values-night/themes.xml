@@ -26,4 +26,21 @@
         <attr name="borderWidth" format="dimension" />
         <attr name="rectRoundRadius" format="dimension" />
     </declare-styleable>
+
+    <style name="MultipleStatusView"/>
+    <style name="MultipleStatusView.Content">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_centerInParent">true</item>
+        <item name="android:layout_margin">8dp</item>
+        <item name="android:textColor">#a9b7b7</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="RecyclerViewStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:scrollbarSize">@dimen/dp_2</item>
+        <item name="android:scrollbars">vertical</item>
+    </style>
 </resources>
