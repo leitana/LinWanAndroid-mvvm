@@ -33,4 +33,11 @@ interface ApiService {
      */
     @GET("article/list/{pageNum}/json")
     suspend fun getArticles(@Path("pageNum") pageNum: Int): ApiResponse<HomeArticle>
+
+    /**
+     * 获取首页置顶文章列表
+     * http://www.wanandroid.com/article/top/json
+     */
+    @GET("article/top/json")
+    suspend fun getTopArticles(): ApiResponse<MutableList<HomeArticle.DatasBean>>
 }

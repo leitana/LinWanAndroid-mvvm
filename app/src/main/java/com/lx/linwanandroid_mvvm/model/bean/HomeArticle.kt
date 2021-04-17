@@ -94,7 +94,7 @@ class HomeArticle {
         var visible = 0
         var zan = 0
         var tags: MutableList<Tag>? = null
-        var top: String? = null
+        var top: Boolean = false
     }
 
     class Tag{

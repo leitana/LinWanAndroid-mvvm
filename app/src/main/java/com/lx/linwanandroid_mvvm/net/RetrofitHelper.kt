@@ -7,14 +7,12 @@ import com.lx.linwanandroid_mvvm.App
 import com.lx.linwanandroid_mvvm.BuildConfig
 import com.lx.linwanandroid_mvvm.api.ApiService
 import com.lx.linwanandroid_mvvm.constant.Constant
-import com.lx.linwanandroid_mvvm.net.interceptor.CacheInterceptor
 import com.lx.linwanandroid_mvvm.net.interceptor.HeaderInterceptor
 import com.lx.linwanandroid_mvvm.net.interceptor.SaveCookieInterceptor
 import okhttp3.Cache
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import java.io.File
 import java.util.concurrent.TimeUnit
@@ -48,7 +46,7 @@ object RetrofitHelper {
                 .client(getOkHttpClient())
                 .addConverterFactory(GsonConverterFactory.create())
 //                .addConverterFactory(MoshiConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+//                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build()
         }
         return retrofit

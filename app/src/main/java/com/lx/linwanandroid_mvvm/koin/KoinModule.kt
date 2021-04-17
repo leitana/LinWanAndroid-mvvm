@@ -2,6 +2,7 @@ package com.lx.linwanandroid_mvvm.koin
 
 import com.lx.linwanandroid_mvvm.ui.main.MainViewModel
 import com.lx.linwanandroid_mvvm.ui.login.LoginViewModel
+import com.lx.linwanandroid_mvvm.ui.main.home.HomeViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -15,6 +16,7 @@ import org.koin.dsl.module
 val viewModelModule = module {
     viewModel { LoginViewModel() }
     viewModel { MainViewModel() }
+    viewModel { HomeViewModel() }
 }
 
 val appModule = listOf(viewModelModule)

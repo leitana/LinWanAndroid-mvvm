@@ -60,7 +60,7 @@ class LoginViewModel : BaseViewModel() {
                 block = {
                     val userInfo = loginRepository.login(userName.value ?: "", password.value ?: "")
                     user = userInfo.username!!
-                    pwd = userInfo.password!!
+                    pwd = password.value.toString()
                     isLogin = true
                     _uiState.value = UiState.Success
                 },

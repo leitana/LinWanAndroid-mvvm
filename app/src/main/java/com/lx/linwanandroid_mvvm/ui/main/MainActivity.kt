@@ -3,10 +3,12 @@ package com.lx.linwanandroid_mvvm.ui.main
 import android.content.Context
 import android.content.res.ColorStateList
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.fragment.app.FragmentTransaction
 import com.lx.linwanandroid_mvvm.R
 import com.lx.linwanandroid_mvvm.base.BaseVMActivity
 import com.lx.linwanandroid_mvvm.databinding.ActivityHomeBinding
 import com.lx.linwanandroid_mvvm.model.bean.Title
+import com.lx.linwanandroid_mvvm.ui.main.home.HomeFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
@@ -17,6 +19,20 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
  * @data Created in 2021/04/06
  */
 class MainActivity: BaseVMActivity(){
+
+    private val FRAGMENT_HOME = 0x01
+    private val FRAGMENT_KNOWLEDGE = 0x02
+    private val FRAGMENT_NAVIGATION = 0x03
+    private val FRAGMENT_PROJECT = 0x04
+    private val FRAGMENT_WECHAT = 0x05
+
+    private var mIndex = FRAGMENT_HOME
+
+    private var mHomeFragment: HomeFragment? = null
+//    private var mKnowledgeTreeFragment: KnowledgeTreeFragment? = null
+//    private var mWeChatFragment: WeChatFragment? = null
+//    private var mNavigationFragment: NavigationFragment? = null
+//    private var mProjectTreeFragment: ProjectTreeFragment? = null
 
     private val binding by binding<ActivityHomeBinding>(R.layout.activity_home)
     private val homeViewModel by viewModel<MainViewModel>()
@@ -36,8 +52,8 @@ class MainActivity: BaseVMActivity(){
                 toggle.syncState()
             }
 
-
-
+            initNavView()
+            showFragment(FRAGMENT_HOME)
         }
     }
 
@@ -50,6 +66,33 @@ class MainActivity: BaseVMActivity(){
     private fun initNavView() {
         binding.bottomNavigation.itemIconTintList = createColorStateList(this@MainActivity, mThemeColor)
         binding.bottomNavigation.itemTextColor = createColorStateList(this@MainActivity, mThemeColor)
+    }
+
+    private fun showFragment(index: Int) {
+        val transaction = supportFragmentManager.beginTransaction()
+        hideFragments(transaction)
+        mIndex = index
+        when(index) {
+            FRAGMENT_HOME -> {
+                binding.title = Title(getString(R.string.app_name))
+                if (mHomeFragment == null) {
+                    mHomeFragment = HomeFragment()
+                    transaction.add(binding.icContainer.id, mHomeFragment!!, "home")
+                } else {
+                    transaction.show(mHomeFragment!!)
+                }
+            }
+        }
+
+        transaction.commit()
+    }
+
+    private fun hideFragments(transaction: FragmentTransaction) {
+        mHomeFragment?.let { transaction.hide(it) }
+//        mKnowledgeTreeFragment?.let { transaction.hide(it) }
+//        mWeChatFragment?.let { transaction.hide(it) }
+//        mNavigationFragment?.let { transaction.hide(it) }
+//        mProjectTreeFragment?.let { transaction.hide(it) }
     }
 
     /**
