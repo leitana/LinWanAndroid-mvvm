@@ -51,4 +51,6 @@ class HomeRepository {
 
         t2.apiData()
     }
+
+    suspend fun getBanner() = RetrofitHelper.service.getBanners().apiData()
 }

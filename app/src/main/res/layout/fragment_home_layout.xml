@@ -5,8 +5,11 @@
 
     <data>
         <variable
+            name="viewModel"
+            type="com.lx.linwanandroid_mvvm.ui.main.home.HomeViewModel" />
+        <variable
             name="adapter"
-            type="com.lx.linwanandroid_mvvm.ui.main.home.HomeAdapter" />
+            type="com.lx.linwanandroid_mvvm.ui.main.home.HomeAdapter2" />
     </data>
 
     <com.lx.linwanandroid_mvvm.widgets.statusView.MultiStatusView
@@ -22,7 +25,8 @@
             android:id="@+id/swipeRefreshLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/viewBackground">
+            android:background="@color/viewBackground"
+            app:onRefresh="@{viewModel.refreshData}">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView"
