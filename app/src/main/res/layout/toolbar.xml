@@ -15,7 +15,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/app_bar_layout"
         android:fitsSystemWindows="true"
-        android:background="@color/gray4"
+        android:background="@{title.bacgroundColor}"
+        app:goneUnless="@{title.gone}"
         app:elevation="4dp">
 
         <androidx.appcompat.widget.Toolbar

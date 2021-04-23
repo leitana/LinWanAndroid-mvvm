@@ -7,4 +7,4 @@ package com.lx.linwanandroid_mvvm.model.bean
  * @author linxiao
  * @data Created in 2021/04/05
  */
-class Title(val title: String)
+class Title(val title: String, val bacgroundColor: Int, var gone: Boolean = false)

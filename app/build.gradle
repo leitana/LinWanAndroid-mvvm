@@ -103,4 +103,6 @@ dependencies {
     def banner_version = "3.0.1"
 //    implementation "androidx.legacy:legacy-support-v4:$banner_version"
     implementation "com.github.bingoogolapple:BGABanner-Android:$banner_version"
+
+    implementation 'com.afollestad.material-dialogs:commons:0.9.4.4'
 }

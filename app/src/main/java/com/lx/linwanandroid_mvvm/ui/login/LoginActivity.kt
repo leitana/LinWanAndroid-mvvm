@@ -8,6 +8,8 @@ import com.lx.linwanandroid_mvvm.ext.showToast
 import com.lx.linwanandroid_mvvm.model.bean.Title
 import com.lx.linwanandroid_mvvm.ui.main.MainActivity
 import com.lx.linwanandroid_mvvm.utils.DialogUtil
+import com.lx.linwanandroid_mvvm.utils.StatusBarUtil
+import com.lx.linwanandroid_mvvm.utils.context
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
@@ -29,8 +31,9 @@ class LoginActivity : BaseVMActivity(){
     override fun initView() {
         binding.run {
             viewModel = loginViewModel
-            title = Title("登录")
+            title = Title("登录", context().getColor(R.color.gray4))
         }
+        StatusBarUtil.transparentStatusBar(this)
     }
 
     override fun initData() {

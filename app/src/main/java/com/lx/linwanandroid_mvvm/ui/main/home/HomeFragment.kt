@@ -9,6 +9,7 @@ import com.lx.linwanandroid_mvvm.R
 import com.lx.linwanandroid_mvvm.base.BaseVMFragment
 import com.lx.linwanandroid_mvvm.databinding.FragmentHomeLayoutBinding
 import com.lx.linwanandroid_mvvm.databinding.ItemHomeBannerBinding
+import com.lx.linwanandroid_mvvm.ext.setLoadMoreStatus
 import com.lx.linwanandroid_mvvm.utils.ImageLoader
 import kotlinx.coroutines.flow.flow
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -100,18 +101,7 @@ class HomeFragment: BaseVMFragment<FragmentHomeLayoutBinding>(R.layout.fragment_
             })
 
             loadMoreStatus.observe(this@HomeFragment, {
-                when(it) {
-                    LoadMoreStatus.End -> {
-                        homeAdapter.loadMoreModule.loadMoreEnd()
-                    }
-                    LoadMoreStatus.Complete -> {
-                        homeAdapter.loadMoreModule.loadMoreComplete()
-                    }
-                    LoadMoreStatus.Fail -> {
-                        homeAdapter.loadMoreModule.loadMoreFail()
-                    }
-                }
-
+                homeAdapter.loadMoreModule.setLoadMoreStatus(it)
             })
         }
     }

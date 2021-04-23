@@ -39,7 +39,7 @@ class MainActivity: BaseVMActivity(){
 
     override fun initView() {
         binding.run {
-            title = Title("主页")
+            title = Title("主页", mThemeColor)
 
             drawerLayout.run {
                 val toggle = ActionBarDrawerToggle(
@@ -74,7 +74,7 @@ class MainActivity: BaseVMActivity(){
         mIndex = index
         when(index) {
             FRAGMENT_HOME -> {
-                binding.title = Title(getString(R.string.app_name))
+                binding.title = Title(getString(R.string.app_name), mThemeColor)
                 if (mHomeFragment == null) {
                     mHomeFragment = HomeFragment()
                     transaction.add(binding.icContainer.id, mHomeFragment!!, "home")
