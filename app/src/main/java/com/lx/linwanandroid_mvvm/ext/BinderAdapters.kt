@@ -49,6 +49,11 @@ fun bindArticleStar(view:ImageView,collect:Boolean){
     view.setImageResource(if (collect) R.drawable.ic_like else R.drawable.ic_like_not)
 }
 
+@BindingAdapter("iconImage")
+fun bindImage(view: ImageView, icon: Int){
+    view.setImageResource(icon)
+}
+
 @BindingAdapter(
     "imageUrl",
     "imagePlaceholder",

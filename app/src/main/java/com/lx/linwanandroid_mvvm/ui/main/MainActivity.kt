@@ -1,14 +1,17 @@
 package com.lx.linwanandroid_mvvm.ui.main
 
 import android.content.Context
+import android.content.Intent
 import android.content.res.ColorStateList
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.fragment.app.FragmentTransaction
+import com.google.android.material.navigation.NavigationView
 import com.lx.linwanandroid_mvvm.R
 import com.lx.linwanandroid_mvvm.base.BaseVMActivity
 import com.lx.linwanandroid_mvvm.databinding.ActivityHomeBinding
 import com.lx.linwanandroid_mvvm.model.bean.Title
 import com.lx.linwanandroid_mvvm.ui.main.home.HomeFragment
+import com.lx.linwanandroid_mvvm.videoCall.navigation.NavigationActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
@@ -66,6 +69,10 @@ class MainActivity: BaseVMActivity(){
     private fun initNavView() {
         binding.bottomNavigation.itemIconTintList = createColorStateList(this@MainActivity, mThemeColor)
         binding.bottomNavigation.itemTextColor = createColorStateList(this@MainActivity, mThemeColor)
+
+        binding.navView.run {
+            setNavigationItemSelectedListener(onDrawerNavigationItemSelectedListener)
+        }
     }
 
     private fun showFragment(index: Int) {
@@ -94,6 +101,44 @@ class MainActivity: BaseVMActivity(){
 //        mNavigationFragment?.let { transaction.hide(it) }
 //        mProjectTreeFragment?.let { transaction.hide(it) }
     }
+
+    private val onDrawerNavigationItemSelectedListener =
+        NavigationView.OnNavigationItemSelectedListener { item ->
+            when(item.itemId) {
+                //积分
+                R.id.nav_score -> {
+
+                }
+                //收藏
+                R.id.nav_collect-> {
+                }
+
+                //TO.DO
+                R.id.nav_todo-> {
+
+                }
+                //夜间模式
+                R.id.nav_night_mode-> {
+                }
+                //系统设置
+                R.id.nav_setting -> {
+                }
+                //关于我
+                R.id.nav_about_us -> {
+
+                }
+                //退出登录
+                R.id.nav_logout -> {
+                }
+
+                R.id.nav_rtc -> {
+                    Intent(this@MainActivity, NavigationActivity::class.java).run {
+                        startActivity(this)
+                    }
+                }
+            }
+            true
+        }
 
     /**
      * 生成ColorStateList

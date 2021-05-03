@@ -38,6 +38,10 @@
             android:id="@+id/nav_logout"
             android:icon="@drawable/ic_logout_white_24dp"
             android:title="@string/nav_logout" />
+        <item
+            android:id="@+id/nav_rtc"
+            android:icon="@drawable/ic_rtc"
+            android:title="@string/nav_rtc"/>
 
     </group>
 </menu>
