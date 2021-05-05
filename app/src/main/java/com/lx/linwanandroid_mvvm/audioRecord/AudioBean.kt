@@ -7,4 +7,4 @@ package com.lx.linwanandroid_mvvm.audioRecord
  * @author linxiao
  * @data Created in 2021/05/01
  */
-class AudioBean(var fileName: String, var audioDuration: Long, var filePath: String)
+class AudioBean(var fileName: String, var audioDuration: Long, var filePath: String, var isSelect: Boolean = false, var progress: Int = 0)

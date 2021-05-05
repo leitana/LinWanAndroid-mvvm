@@ -88,26 +88,27 @@ public class RhythmView extends View {
 
 
     private void handleColor() {
-        int[] colors = new int[]{
-                Color.parseColor("#33F60C0C"),//红
-                Color.parseColor("#F3B913"),//橙
-                Color.parseColor("#E7F716"),//黄
-                Color.parseColor("#3DF30B"),//绿
-                Color.parseColor("#0DF6EF"),//青
-                Color.parseColor("#0829FB"),//蓝
-                Color.parseColor("#33B709F4"),//紫
-        };
+//        int[] colors = new int[]{
+//                Color.parseColor("#33F60C0C"),//红
+//                Color.parseColor("#F3B913"),//橙
+//                Color.parseColor("#E7F716"),//黄
+//                Color.parseColor("#3DF30B"),//绿
+//                Color.parseColor("#0DF6EF"),//青
+//                Color.parseColor("#0829FB"),//蓝
+//                Color.parseColor("#33B709F4"),//紫
+//        };
+//
+//        float[] pos = new float[]{
+//                1.f / 10, 2.f / 7, 3.f / 7, 4.f / 7, 5.f / 7, 9.f / 10, 1
+//        };
 
-        float[] pos = new float[]{
-                1.f / 10, 2.f / 7, 3.f / 7, 4.f / 7, 5.f / 7, 9.f / 10, 1
-        };
-
-        mPaint.setShader(
-                new LinearGradient(
-                        (int) min, 0, (int) max, 0,
-                        colors, pos,
-                        Shader.TileMode.CLAMP
-                ));
+//        mPaint.setShader(
+//                new LinearGradient(
+//                        (int) min, 0, (int) max, 0,
+//                        colors, pos,
+//                        Shader.TileMode.CLAMP
+//                ));
+        mPaint.setColor(Color.BLACK);
     }
 
 

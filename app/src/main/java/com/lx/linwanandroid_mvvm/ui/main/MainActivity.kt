@@ -7,6 +7,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.fragment.app.FragmentTransaction
 import com.google.android.material.navigation.NavigationView
 import com.lx.linwanandroid_mvvm.R
+import com.lx.linwanandroid_mvvm.audioRecord.AudioActivity
 import com.lx.linwanandroid_mvvm.base.BaseVMActivity
 import com.lx.linwanandroid_mvvm.databinding.ActivityHomeBinding
 import com.lx.linwanandroid_mvvm.model.bean.Title
@@ -133,6 +134,12 @@ class MainActivity: BaseVMActivity(){
 
                 R.id.nav_rtc -> {
                     Intent(this@MainActivity, NavigationActivity::class.java).run {
+                        startActivity(this)
+                    }
+                }
+
+                R.id.nav_audioRecord -> {
+                    Intent(this@MainActivity, AudioActivity::class.java).run {
                         startActivity(this)
                     }
                 }

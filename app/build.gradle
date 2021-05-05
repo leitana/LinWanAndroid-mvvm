@@ -41,12 +41,23 @@ android {
     }
 
     packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/license.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/notice.txt'
+        exclude 'META-INF/ASL2.0'
+        exclude("META-INF/*.kotlin_module")
+
         pickFirst '**/libc++_shared.so'
         doNotStrip "*/armeabi/libYTCommon.so"
         doNotStrip "*/armeabi-v7a/libYTCommon.so"
         doNotStrip "*/x86/libYTCommon.so"
         doNotStrip "*/arm64-v8a/libYTCommon.so"
     }
+
 }
 
 dependencies {
@@ -120,4 +131,14 @@ dependencies {
     implementation 'com.afollestad.material-dialogs:commons:0.9.4.4'
 
     implementation 'com.tencent.liteav:LiteAVSDK_TRTC:latest.release'
+
+    implementation 'com.blankj:utilcodex:1.30.6'
+    //权限
+    def permissionsdispatcher_version = "4.8.0"
+    implementation "com.github.permissions-dispatcher:permissionsdispatcher:${permissionsdispatcher_version}"
+    kapt "com.github.permissions-dispatcher:permissionsdispatcher-processor:${permissionsdispatcher_version}"
+
+    //录音正弦波
+    implementation 'com.github.Jay-Goo:WaveLineView:v1.0.4'
+
 }

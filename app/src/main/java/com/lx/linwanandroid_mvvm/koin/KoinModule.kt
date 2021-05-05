@@ -1,5 +1,6 @@
 package com.lx.linwanandroid_mvvm.koin
 
+import com.lx.linwanandroid_mvvm.audioRecord.AudioViewModel
 import com.lx.linwanandroid_mvvm.ui.main.MainViewModel
 import com.lx.linwanandroid_mvvm.ui.login.LoginViewModel
 import com.lx.linwanandroid_mvvm.ui.main.home.HomeViewModel
@@ -17,6 +18,7 @@ val viewModelModule = module {
     viewModel { LoginViewModel() }
     viewModel { MainViewModel() }
     viewModel { HomeViewModel() }
+    viewModel { AudioViewModel() }
 }
 
 val appModule = listOf(viewModelModule)

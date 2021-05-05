@@ -43,5 +43,10 @@
             android:icon="@drawable/ic_rtc"
             android:title="@string/nav_rtc"/>
 
+        <item
+            android:id="@+id/nav_audioRecord"
+            android:icon="@drawable/ic_audio_recorder_icon"
+            android:title="@string/nav_audio_record"/>
+
     </group>
 </menu>
