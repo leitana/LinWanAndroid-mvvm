@@ -38,3 +38,23 @@ fun Fragment.showSnackMsg(msg: String) {
     view.findViewById<TextView>(R.id.snackbar_text).setTextColor(ContextCompat.getColor(this.requireActivity(), R.color.white))
     snackbar.show()
 }
+
+fun Int.getTime(): String {
+    var min = 0
+    var second = 0
+    var minStr: StringBuilder = StringBuilder("00")
+    var secondStr: StringBuilder = StringBuilder("00")
+    min = this / 1000 / 60
+    second = this / 1000 % 60
+    minStr = if (min < 10) {
+        StringBuilder("0").append(min)
+    } else {
+        StringBuilder(min.toString())
+    }
+    secondStr = if (second < 10) {
+        StringBuilder("0").append(second)
+    } else {
+        StringBuilder(second.toString())
+    }
+    return minStr.append(":").append(secondStr).toString()
+}

@@ -124,15 +124,21 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.11.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
 
+    //banner
     def banner_version = "3.0.1"
 //    implementation "androidx.legacy:legacy-support-v4:$banner_version"
     implementation "com.github.bingoogolapple:BGABanner-Android:$banner_version"
 
-    implementation 'com.afollestad.material-dialogs:commons:0.9.4.4'
+    //material-dialog
+    implementation 'com.afollestad.material-dialogs:commons:0.9.6.0'
 
-    implementation 'com.tencent.liteav:LiteAVSDK_TRTC:latest.release'
+    //腾讯音视频通话
 
+    implementation 'com.tencent.liteav:LiteAVSDK_TRTC:8.6.10097'
+
+    //Android工具包
     implementation 'com.blankj:utilcodex:1.30.6'
+
     //权限
     def permissionsdispatcher_version = "4.8.0"
     implementation "com.github.permissions-dispatcher:permissionsdispatcher:${permissionsdispatcher_version}"

@@ -6,6 +6,7 @@ import android.os.Environment
 import android.os.Environment.getExternalStorageDirectory
 import android.util.Log
 import android.view.View
+import androidx.lifecycle.lifecycleScope
 import com.blankj.utilcode.util.FileUtils
 import com.blankj.utilcode.util.PathUtils
 import com.lx.linwanandroid_mvvm.R
@@ -13,6 +14,7 @@ import com.lx.linwanandroid_mvvm.base.BaseVMActivity
 import com.lx.linwanandroid_mvvm.databinding.ActivityAudiorecordBinding
 import com.lx.linwanandroid_mvvm.model.bean.Title
 import kotlinx.android.synthetic.main.activity_audiorecord.view.*
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import permissions.dispatcher.NeedsPermission
 import permissions.dispatcher.RuntimePermissions
@@ -32,7 +34,7 @@ class AudioActivity: BaseVMActivity() {
     private val audioViewModel by viewModel<AudioViewModel>()
     private val binding by binding<ActivityAudiorecordBinding>(R.layout.activity_audiorecord)
     private val audioAdapter by lazy {
-        AudioAdapter(mutableListOf())
+        AudioAdapter(mutableListOf(), this@AudioActivity)
     }
 
 
@@ -41,7 +43,7 @@ class AudioActivity: BaseVMActivity() {
             viewModel = audioViewModel
             adapter = audioAdapter
             handler = this@AudioActivity
-            title = Title("登录", mThemeColor)
+            title = Title("录音", mThemeColor)
             binding.root.ivStart.setOnClickListener {
                 startRecordWithPermissionCheck(root.rootView.ivStart)
             }
@@ -76,6 +78,9 @@ class AudioActivity: BaseVMActivity() {
 
 
     override fun initData() {
+        lifecycleScope.launch {
+            audioViewModel.getAudioList()
+        }
     }
 
     override fun startObserve() {
@@ -96,7 +101,7 @@ class AudioActivity: BaseVMActivity() {
                         binding.root.ivPause.setImageResource(R.drawable.ic_resume)
                     }
                     AudioViewModel.RecordStates.Stop -> {
-
+                        initData()
                     }
                     AudioViewModel.RecordStates.Error -> {
 
@@ -120,7 +125,7 @@ class AudioActivity: BaseVMActivity() {
         Manifest.permission.RECORD_AUDIO
     )
     fun startRecord(view: View) {
-        val path = PathUtils.getRootPathExternalFirst() + File.separator +  "wanandroid/audio" + System.currentTimeMillis() + ".mp3"
+        val path = audioViewModel.path + File.separator + System.currentTimeMillis() + ".mp3"
 
         FileUtils.createOrExistsFile(path)
         audioViewModel.recordRecord(path)
@@ -140,13 +145,4 @@ class AudioActivity: BaseVMActivity() {
         onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 
-    fun getRootDir(context: Context): String? {
-        return if (Environment.getExternalStorageState() == Environment.MEDIA_MOUNTED) {
-            // 优先获取SD卡根目录[/storage/sdcard0]
-            getExternalStorageDirectory().absolutePath
-        } else {
-            // 应用缓存目录[/data/data/应用包名/cache]
-            context.cacheDir.absolutePath
-        }
-    }
 }

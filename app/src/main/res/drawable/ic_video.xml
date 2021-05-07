@@ -1,0 +1,40 @@
+<vector android:height="24dp" android:viewportHeight="1024"
+    android:viewportWidth="1024" android:width="24dp" xmlns:android="http://schemas.android.com/apk/res/android">
+    <path android:fillColor="#FFFFFFFF" android:pathData="M0,0 L1024,0 0,0Z"/>
+    <path android:fillColor="#FFFFFFFF" android:pathData="M0,963.78 L1024,963.78 0,963.78Z"/>
+    <path android:fillColor="#FFFFFFFF" android:pathData="M0,903.49 L1024,903.49 0,903.49Z"/>
+    <path android:fillColor="#FFFFFFFF" android:pathData="M0,843.26 L1024,843.26 0,843.26Z"/>
+    <path android:fillColor="#FFFFFFFF" android:pathData="M0,782.98 L1024,782.98 0,782.98Z"/>
+    <path android:fillColor="#FFFFFFFF" android:pathData="M0,722.75 L1024,722.75 0,722.75Z"/>
+    <path android:fillColor="#FFFFFFFF" android:pathData="M0,662.53 L1024,662.53 0,662.53Z"/>
+    <path android:fillColor="#FFFFFFFF" android:pathData="M0,602.24 L1024,602.24 0,602.24Z"/>
+    <path android:fillColor="#FFFFFFFF" android:pathData="M0,542.02 L1024,542.02 0,542.02Z"/>
+    <path android:fillColor="#FFFFFFFF" android:pathData="M0,481.98 L1024,481.98 0,481.98Z"/>
+    <path android:fillColor="#FFFFFFFF" android:pathData="M0,421.76 L1024,421.76 0,421.76Z"/>
+    <path android:fillColor="#FFFFFFFF" android:pathData="M0,361.47 L1024,361.47 0,361.47Z"/>
+    <path android:fillColor="#FFFFFFFF" android:pathData="M0,301.25 L1024,301.25 0,301.25Z"/>
+    <path android:fillColor="#FFFFFFFF" android:pathData="M0,241.02 L1024,241.02 0,241.02Z"/>
+    <path android:fillColor="#FFFFFFFF" android:pathData="M0,180.74 L1024,180.74 0,180.74Z"/>
+    <path android:fillColor="#FFFFFFFF" android:pathData="M0,120.51 L1024,120.51 0,120.51Z"/>
+    <path android:fillColor="#FFFFFFFF" android:pathData="M0,60.22 L1024,60.22 0,60.22Z"/>
+    <path android:fillColor="#FFFFFFFF" android:pathData="M0,1024 L1024,1024 0,1024Z"/>
+    <path android:fillColor="#FFFFFFFF" android:pathData="M0,0 L0,1024 0,0Z"/>
+    <path android:fillColor="#FFFFFFFF" android:pathData="M963.78,0 L963.78,1024 963.78,0Z"/>
+    <path android:fillColor="#FFFFFFFF" android:pathData="M903.49,0 L903.49,1024 903.49,0Z"/>
+    <path android:fillColor="#FFFFFFFF" android:pathData="M843.26,0 L843.26,1024 843.26,0Z"/>
+    <path android:fillColor="#FFFFFFFF" android:pathData="M782.98,0 L782.98,1024 782.98,0Z"/>
+    <path android:fillColor="#FFFFFFFF" android:pathData="M722.75,0 L722.75,1024 722.75,0Z"/>
+    <path android:fillColor="#FFFFFFFF" android:pathData="M662.53,0 L662.53,1024 662.53,0Z"/>
+    <path android:fillColor="#FFFFFFFF" android:pathData="M602.24,0 L602.24,1024 602.24,0Z"/>
+    <path android:fillColor="#FFFFFFFF" android:pathData="M542.02,0 L542.02,1024 542.02,0Z"/>
+    <path android:fillColor="#FFFFFFFF" android:pathData="M481.98,0 L481.98,1024 481.98,0Z"/>
+    <path android:fillColor="#FFFFFFFF" android:pathData="M421.76,0 L421.76,1024 421.76,0Z"/>
+    <path android:fillColor="#FFFFFFFF" android:pathData="M361.47,0 L361.47,1024 361.47,0Z"/>
+    <path android:fillColor="#FFFFFFFF" android:pathData="M301.25,0 L301.25,1024 301.25,0Z"/>
+    <path android:fillColor="#FFFFFFFF" android:pathData="M241.02,0 L241.02,1024 241.02,0Z"/>
+    <path android:fillColor="#FFFFFFFF" android:pathData="M180.74,0 L180.74,1024 180.74,0Z"/>
+    <path android:fillColor="#FFFFFFFF" android:pathData="M120.51,0 L120.51,1024 120.51,0Z"/>
+    <path android:fillColor="#FFFFFFFF" android:pathData="M60.22,0 L60.22,1024 60.22,0Z"/>
+    <path android:fillColor="#FFFFFFFF" android:pathData="M1024,0 L1024,1024 1024,0Z"/>
+    <path android:fillColor="#FFFFFFFF" android:pathData="M928.06,226.43 L96,226.43C78.34,226.43 64,240.83 64,258.69l0,506.62c0,17.86 14.34,32.38 32,32.38l832.06,0c17.54,0 31.94,-14.53 31.94,-32.38L960,258.69C960,240.83 945.6,226.43 928.06,226.43zM472,264.96l79.94,0 0,80.7L472,345.66 472,264.96 472,264.96zM228.35,756.99l-80,0 0,-80.64 80,0L228.35,756.99zM228.35,345.66l-80,0L148.35,264.96l80,0L228.35,345.66zM390.21,756.99 L310.27,756.99l0,-80.64 79.94,0L390.21,756.99zM390.21,345.66 L310.27,345.66 310.27,264.96l79.94,0L390.21,345.66zM551.94,756.99 L472,756.99l0,-80.64 79.94,0L551.94,756.99zM426.69,611.39 L426.69,412.61 597.38,512 426.69,611.39zM713.79,756.99 L633.86,756.99l0,-80.64 79.94,0L713.79,756.99zM713.79,345.66 L633.86,345.66 633.86,264.96l79.94,0L713.79,345.66zM875.65,756.99l-79.94,0 0,-80.64 79.94,0L875.65,756.99zM875.65,345.66l-79.94,0L795.71,264.96l79.94,0L875.65,345.66z"/>
+</vector>

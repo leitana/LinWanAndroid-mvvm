@@ -37,6 +37,7 @@
     <string name="nav_id">ID:</string>
     <string name="nav_grade">等级:</string>
     <string name="nav_rank">排名:</string>
+    <string name="nav_video">视频播放</string>
     <string name="nav_rtc">视频通话</string>
     <string name="nav_audio_record">录音</string>
 

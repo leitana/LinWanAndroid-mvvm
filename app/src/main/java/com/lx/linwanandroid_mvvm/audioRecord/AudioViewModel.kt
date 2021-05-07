@@ -1,11 +1,16 @@
 package com.lx.linwanandroid_mvvm.audioRecord
 
+import android.media.MediaPlayer
 import androidx.lifecycle.MutableLiveData
+import com.blankj.utilcode.util.FileUtils
+import com.blankj.utilcode.util.PathUtils
 import com.lx.linwanandroid_mvvm.audioRecord.audioRecord.AudioRecorder
 import com.lx.linwanandroid_mvvm.audioRecord.audioRecord.RecorderListener
 import com.lx.linwanandroid_mvvm.base.BaseViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import java.io.File
-import java.lang.StringBuilder
+
 
 /**
  * @title：AudioViewModel
@@ -20,7 +25,11 @@ class AudioViewModel: BaseViewModel() {
         Start, Pause, Resume, Stop, Error
     }
 
+    val path: String = PathUtils.getRootPathExternalFirst() + File.separator +  "wanandroid/audio"
+
     var audioList: MutableLiveData<MutableList<AudioBean>> = MutableLiveData()
+
+    var audioFileList: MutableList<File> = mutableListOf()
     //是否正在录音
     var isRecording: MutableLiveData<Boolean> = MutableLiveData(false)
 
@@ -35,7 +44,7 @@ class AudioViewModel: BaseViewModel() {
     private val audioTimeString: StringBuilder = StringBuilder("0:0")
 
     fun recordRecord(outFile: String) {
-        AudioRecorder.setRecorderCallback(object: RecorderListener.RecorderCallback{
+        AudioRecorder.setRecorderCallback(object : RecorderListener.RecorderCallback {
             override fun onStartRecord(output: File) {
                 recordState.value = RecordStates.Start
                 isRecording.value = true
@@ -88,6 +97,47 @@ class AudioViewModel: BaseViewModel() {
 
     fun stopAudio() {
         AudioRecorder.stopRecording()
+    }
+
+//    suspend fun getAudioList(path: String){
+//        launchOnIO {
+//            val audioBeanList = mutableListOf<AudioBean>()
+//            audioFileList = FileUtils.listFilesInDirWithFilter(path) { path.endsWith(".mp3") }
+//            val mediaPlayer = MediaPlayer()
+//            var audioDuration: Int
+//            for (audio in audioFileList) {
+//                mediaPlayer.setDataSource(audio.path)
+//                mediaPlayer.prepare();
+//                audioDuration = mediaPlayer.duration
+//                val audioBean = AudioBean(audio.name, audioDuration, audio.path, false, 0)
+//                audioBeanList.add(audioBean)
+//            }
+//            audioList.value = audioBeanList
+//            mediaPlayer.stop()
+//            mediaPlayer.reset()
+//            mediaPlayer.release()
+//        }
+//    }
+    suspend fun getAudioList() {
+        withContext(Dispatchers.IO){
+            val audioBeanList = mutableListOf<AudioBean>()
+            audioFileList = FileUtils.listFilesInDirWithFilter(path
+            ) { pathname -> pathname!!.name.endsWith(".mp3") }
+            val mediaPlayer = MediaPlayer()
+            var audioDuration: Int
+            for (audio in audioFileList) {
+                mediaPlayer.reset()
+                mediaPlayer.setDataSource(audio.path)
+                mediaPlayer.prepare();
+                audioDuration = mediaPlayer.duration
+                val audioBean = AudioBean(audio.name, audioDuration, audio.path, false, 0)
+                audioBeanList.add(audioBean)
+            }
+            audioList.postValue(audioBeanList)
+            mediaPlayer.stop()
+            mediaPlayer.reset()
+            mediaPlayer.release()
+        }
     }
 
 }
