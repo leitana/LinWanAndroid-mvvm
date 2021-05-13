@@ -1,8 +1,10 @@
 package com.lx.linwanandroid_mvvm.ui.main
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.res.ColorStateList
+import android.graphics.drawable.GradientDrawable
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.fragment.app.FragmentTransaction
 import com.google.android.material.navigation.NavigationView
@@ -12,8 +14,12 @@ import com.lx.linwanandroid_mvvm.base.BaseVMActivity
 import com.lx.linwanandroid_mvvm.databinding.ActivityHomeBinding
 import com.lx.linwanandroid_mvvm.model.bean.Title
 import com.lx.linwanandroid_mvvm.ui.main.home.HomeFragment
+import com.lx.linwanandroid_mvvm.utils.StatusBarUtil
 import com.lx.linwanandroid_mvvm.videoCall.navigation.NavigationActivity
+import com.lx.linwanandroid_mvvm.videoplayer.SimplePlayerActivity
+import kotlinx.android.synthetic.main.toolbar.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.util.*
 
 /**
  * @title：HomeActivity
@@ -41,6 +47,7 @@ class MainActivity: BaseVMActivity(){
     private val binding by binding<ActivityHomeBinding>(R.layout.activity_home)
     private val homeViewModel by viewModel<MainViewModel>()
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     override fun initView() {
         binding.run {
             title = Title("主页", mThemeColor)
@@ -51,13 +58,24 @@ class MainActivity: BaseVMActivity(){
                     this,
                     icToolbar.toolbar,
                     R.string.navigation_drawer_open,
-                    R.string.navigation_drawer_close)
+                    R.string.navigation_drawer_close
+                )
                 addDrawerListener(toggle)
                 toggle.syncState()
             }
 
             initNavView()
             showFragment(FRAGMENT_HOME)
+            val random = Random()
+            val mStartColor = -0x1000000 or random.nextInt(0xffffff)
+            val mEndColor = -0x1000000 or random.nextInt(0xffffff)
+            val colors = intArrayOf(mStartColor, mEndColor)
+            val gradientDrawable = GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, colors)
+            StatusBarUtil.setDrawable(this@MainActivity, R.drawable.bg_appbar)
+            icToolbar.appBarLayout.setBackgroundDrawable(resources.getDrawable(R.drawable.bg_appbar))
+//            StatusBarUtil.setGradientColor(this@MainActivity, icToolbar.toolbar)
+//            viewTest.background = gradientDrawable
+
         }
     }
 
@@ -68,8 +86,14 @@ class MainActivity: BaseVMActivity(){
     }
 
     private fun initNavView() {
-        binding.bottomNavigation.itemIconTintList = createColorStateList(this@MainActivity, mThemeColor)
-        binding.bottomNavigation.itemTextColor = createColorStateList(this@MainActivity, mThemeColor)
+        binding.bottomNavigation.itemIconTintList = createColorStateList(
+            this@MainActivity,
+            mThemeColor
+        )
+        binding.bottomNavigation.itemTextColor = createColorStateList(
+            this@MainActivity,
+            mThemeColor
+        )
 
         binding.navView.run {
             setNavigationItemSelectedListener(onDrawerNavigationItemSelectedListener)
@@ -111,15 +135,15 @@ class MainActivity: BaseVMActivity(){
 
                 }
                 //收藏
-                R.id.nav_collect-> {
+                R.id.nav_collect -> {
                 }
 
                 //TO.DO
-                R.id.nav_todo-> {
+                R.id.nav_todo -> {
 
                 }
                 //夜间模式
-                R.id.nav_night_mode-> {
+                R.id.nav_night_mode -> {
                 }
                 //系统设置
                 R.id.nav_setting -> {
@@ -140,6 +164,12 @@ class MainActivity: BaseVMActivity(){
 
                 R.id.nav_audioRecord -> {
                     Intent(this@MainActivity, AudioActivity::class.java).run {
+                        startActivity(this)
+                    }
+                }
+
+                R.id.nav_videoPlay -> {
+                    Intent(this@MainActivity, SimplePlayerActivity::class.java).run {
                         startActivity(this)
                     }
                 }

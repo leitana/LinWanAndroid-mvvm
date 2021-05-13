@@ -67,12 +67,19 @@ public class MusicPlayer {
     /**
      * 停止播放器
      */
-    private void stop() {
+    public void stop() {
         if (mPlayer != null && mPlayer.isPlaying()) {
             mPlayer.stop();
         }
+        if (mOnSeekListener != null) {
+            mOnSeekListener.OnSeek(0);
+        }
+        if (mOnSeekListener != null) {
+            mOnStateListener.isCanPlay(true);
+        }
     }
-    
+
+
     /**
      * 暂停播放器
      */

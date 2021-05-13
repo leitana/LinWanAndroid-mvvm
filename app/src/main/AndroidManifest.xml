@@ -44,10 +44,12 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".MainActivity"/>
         <activity android:name=".ui.main.MainActivity"/>
         <activity android:name=".videoCall.navigation.NavigationActivity"/>
         <activity android:name=".audioRecord.AudioActivity"/>
+        <activity android:name=".videoplayer.SimplePlayerActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize|uiMode"
+            android:theme="@style/Theme.AppCompat.Full" />
 
         <provider
             android:name=".utils.ContextProvider"

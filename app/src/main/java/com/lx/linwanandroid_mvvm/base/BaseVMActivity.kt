@@ -2,6 +2,7 @@ package com.lx.linwanandroid_mvvm.base
 
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.GradientDrawable
 import android.os.Build
 import android.os.Bundle
 import androidx.annotation.LayoutRes
@@ -14,6 +15,7 @@ import com.lx.linwanandroid_mvvm.constant.Constant
 import com.lx.linwanandroid_mvvm.utils.Preference
 import com.lx.linwanandroid_mvvm.utils.SettingUtil
 import com.lx.linwanandroid_mvvm.utils.StatusBarUtil
+import java.util.*
 
 /**
  * @title：BaseVMActivity
@@ -27,7 +29,7 @@ abstract class BaseVMActivity : AppCompatActivity(){
     var mThemeColor: Int by Preference(Constant.THEME_COLOR, -1)
 
 
-    protected inline fun <reified T: ViewDataBinding> binding(@LayoutRes resId: Int): Lazy<T> = lazy {
+    protected inline fun <reified T : ViewDataBinding> binding(@LayoutRes resId: Int): Lazy<T> = lazy {
         DataBindingUtil.setContentView<T>(this, resId).apply {
             lifecycleOwner = this@BaseVMActivity
         }
@@ -35,7 +37,7 @@ abstract class BaseVMActivity : AppCompatActivity(){
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        initColor()
+//        initColor()
         startObserve()
         initView()
         initData()
@@ -46,6 +48,7 @@ abstract class BaseVMActivity : AppCompatActivity(){
     abstract fun startObserve()
 
     open fun initColor(){
+
         mThemeColor = if (!SettingUtil.isNightMode()) {
             SettingUtil.getColor()
         } else {

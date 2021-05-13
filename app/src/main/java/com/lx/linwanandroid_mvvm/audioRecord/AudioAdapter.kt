@@ -24,9 +24,13 @@ import com.lx.linwanandroid_mvvm.utils.context
  * @author linxiao
  * @data Created in 2021/05/04
  */
-class AudioAdapter(private var datas: MutableList<AudioBean>,val mContext: Context): RecyclerView.Adapter<RecyclerView.ViewHolder>(){
+class AudioAdapter(private var datas: MutableList<AudioBean>, val mContext: Context): RecyclerView.Adapter<RecyclerView.ViewHolder>(){
 
     var isClick = false
+    private val musicPlayer: MusicPlayer by lazy {
+        MusicPlayer(context())
+    }
+
 
     override fun getItemViewType(position: Int): Int {
         val audioBean = datas[position]
@@ -40,10 +44,18 @@ class AudioAdapter(private var datas: MutableList<AudioBean>,val mContext: Conte
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == 0) {
-            val view: View = LayoutInflater.from(parent.context).inflate(R.layout.item_normal_audio, parent, false)
+            val view: View = LayoutInflater.from(parent.context).inflate(
+                R.layout.item_normal_audio,
+                parent,
+                false
+            )
             ViewHolderNormal(view)
         } else {
-            val view: View = LayoutInflater.from(parent.context).inflate(R.layout.item_select_audio, parent, false)
+            val view: View = LayoutInflater.from(parent.context).inflate(
+                R.layout.item_select_audio,
+                parent,
+                false
+            )
             ViewHolderSelect(view)
         }
     }
@@ -57,6 +69,7 @@ class AudioAdapter(private var datas: MutableList<AudioBean>,val mContext: Conte
                     audioData.isSelect = false
                 }
                 datas[position].isSelect = true
+                musicPlayer.stop()
                 notifyDataSetChanged()
             }
         } else if (holder is ViewHolderSelect) {
@@ -67,12 +80,12 @@ class AudioAdapter(private var datas: MutableList<AudioBean>,val mContext: Conte
 //                } else {
 //                    ivPlay.setImageResource(R.drawable.ic_resume)
 //                }
-                val musicPlayer = MusicPlayer(context())
                 currentData.let {
                     totalTime.text = currentData.audioDuration.getTime()
                 }
                 root.setOnClickListener {
                     currentData.isSelect = false
+                    musicPlayer.stop()
                     notifyItemChanged(position)
                 }
 

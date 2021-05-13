@@ -15,7 +15,6 @@
         android:layout_height="wrap_content"
         android:id="@+id/app_bar_layout"
         android:fitsSystemWindows="true"
-        android:background="@{title.bacgroundColor}"
         app:goneUnless="@{title.gone}"
         app:elevation="4dp">
 
@@ -35,9 +34,5 @@
                 android:textSize="18sp"
                 android:text="@{title.title}" />
         </androidx.appcompat.widget.Toolbar>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_1"
-            android:background="@color/Grey700"/>
     </com.google.android.material.appbar.AppBarLayout>
 </layout>

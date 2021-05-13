@@ -128,7 +128,7 @@ class AudioViewModel: BaseViewModel() {
             for (audio in audioFileList) {
                 mediaPlayer.reset()
                 mediaPlayer.setDataSource(audio.path)
-                mediaPlayer.prepare();
+                mediaPlayer.prepare()
                 audioDuration = mediaPlayer.duration
                 val audioBean = AudioBean(audio.name, audioDuration, audio.path, false, 0)
                 audioBeanList.add(audioBean)

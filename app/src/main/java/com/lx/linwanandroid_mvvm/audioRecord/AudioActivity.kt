@@ -6,6 +6,8 @@ import android.os.Environment
 import android.os.Environment.getExternalStorageDirectory
 import android.util.Log
 import android.view.View
+import android.view.animation.Animation
+import android.view.animation.TranslateAnimation
 import androidx.lifecycle.lifecycleScope
 import com.blankj.utilcode.util.FileUtils
 import com.blankj.utilcode.util.PathUtils
@@ -116,6 +118,30 @@ class AudioActivity: BaseVMActivity() {
 //                Log.d("1111111", it.toString())
                 binding.root.waveView.setPerHeight(it.toDouble() / 8000)
 //                binding.root.waveView.setPerHeight(it.toDouble() / 5000)
+            })
+
+            isRecording.observe(this@AudioActivity, {
+                if (it){
+                    binding.llWave.visibility = View.VISIBLE
+                    val mShowAction = TranslateAnimation(Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 1.0f, Animation.RELATIVE_TO_SELF, 0.0f)
+                    mShowAction.duration = 500
+                    binding.llWave.startAnimation(mShowAction)
+                } else {
+                    val mCloseAction  = TranslateAnimation(Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f,
+                        Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 1.0f)
+                    mCloseAction.duration = 500
+                    mCloseAction.setAnimationListener(object : Animation.AnimationListener{
+                        override fun onAnimationStart(animation: Animation?) {
+                        }
+                        override fun onAnimationEnd(animation: Animation?) {
+                            binding.llWave.visibility = View.GONE
+                        }
+                        override fun onAnimationRepeat(animation: Animation?) {
+                        }
+
+                    })
+                    binding.llWave.startAnimation(mCloseAction)
+                }
             })
         }
     }
