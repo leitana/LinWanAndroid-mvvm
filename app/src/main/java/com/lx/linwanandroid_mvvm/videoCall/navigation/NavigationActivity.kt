@@ -1,9 +1,15 @@
 package com.lx.linwanandroid_mvvm.videoCall.navigation
 
+import android.content.Intent
 import com.lx.linwanandroid_mvvm.R
 import com.lx.linwanandroid_mvvm.base.BaseActivity
 import com.lx.linwanandroid_mvvm.ui.login.LoginActivity
+import io.rong.callkit.RongCallKit
+import io.rong.imkit.RongIM
+import io.rong.imlib.RongIMClient
+import io.rong.imlib.RongIMClient.ConnectCallback
 import kotlinx.android.synthetic.main.activity_trtc_navigation.*
+
 
 /**
  * @title：NavigationActivity
@@ -23,6 +29,10 @@ class NavigationActivity: BaseActivity(){
         mAdapter = NavigationAdapter()
         recyclerView.run {
             adapter = mAdapter
+        }
+        mAdapter.setOnItemClickListener { adapter, view, position ->
+            val intent = Intent(this@NavigationActivity, list[position].mTargetClass)
+            startActivity(intent )
         }
     }
 
@@ -61,7 +71,7 @@ class NavigationActivity: BaseActivity(){
                 "48kHz高音质，60%丢包可正常语音通话，领先行业的3A处理，杜绝回声和啸叫。",
                 R.drawable.voice_call,
                 1,
-                LoginActivity::class.java
+                RongCallActivity::class.java
             )
         )
         list.add(

@@ -66,15 +66,8 @@ class MainActivity: BaseVMActivity(){
 
             initNavView()
             showFragment(FRAGMENT_HOME)
-            val random = Random()
-            val mStartColor = -0x1000000 or random.nextInt(0xffffff)
-            val mEndColor = -0x1000000 or random.nextInt(0xffffff)
-            val colors = intArrayOf(mStartColor, mEndColor)
-            val gradientDrawable = GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, colors)
             StatusBarUtil.setDrawable(this@MainActivity, R.drawable.bg_appbar)
             icToolbar.appBarLayout.setBackgroundDrawable(resources.getDrawable(R.drawable.bg_appbar))
-//            StatusBarUtil.setGradientColor(this@MainActivity, icToolbar.toolbar)
-//            viewTest.background = gradientDrawable
 
         }
     }

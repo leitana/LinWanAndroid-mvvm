@@ -3,9 +3,13 @@ package com.lx.linwanandroid_mvvm
 import android.app.Application
 import android.content.Context
 import com.lx.linwanandroid_mvvm.koin.appModule
+import io.rong.imkit.RongIM
+import io.rong.push.RongPushClient
+import io.rong.push.pushconfig.PushConfig
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 import kotlin.properties.Delegates
+
 
 /**
  * @title：App
@@ -27,5 +31,9 @@ class App: Application() {
             androidContext(this@App)
             modules(appModule)
         }
+        val config = PushConfig.Builder()
+            .build()
+        RongPushClient.setPushConfig(config)
+        RongIM.init(this, "pwe86ga5psyv6")
     }
 }

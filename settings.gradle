@@ -1,3 +1,4 @@
+include ':rongcloud'
 include ':trtccallingdemo'
 include ':app'
 rootProject.name = "LinWanAndroid-mvvm"

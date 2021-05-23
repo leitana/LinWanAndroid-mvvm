@@ -1,17 +1,14 @@
 package com.lx.linwanandroid_mvvm.ui.main.home
 
-import android.view.View
 import android.widget.ImageView
 import androidx.databinding.DataBindingUtil
 import cn.bingoogolapple.bgabanner.BGABanner
-import com.chad.library.adapter.base.loadmore.LoadMoreStatus
 import com.lx.linwanandroid_mvvm.R
 import com.lx.linwanandroid_mvvm.base.BaseVMFragment
 import com.lx.linwanandroid_mvvm.databinding.FragmentHomeLayoutBinding
 import com.lx.linwanandroid_mvvm.databinding.ItemHomeBannerBinding
 import com.lx.linwanandroid_mvvm.ext.setLoadMoreStatus
 import com.lx.linwanandroid_mvvm.utils.ImageLoader
-import kotlinx.coroutines.flow.flow
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
