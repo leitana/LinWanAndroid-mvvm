@@ -116,7 +116,7 @@ class AudioActivity: BaseVMActivity() {
 
             audioAmplitude.observe(this@AudioActivity, {
 //                Log.d("1111111", it.toString())
-                binding.root.waveView.setPerHeight(it.toDouble() / 8000)
+                binding.root.waveView.update(it)
 //                binding.root.waveView.setPerHeight(it.toDouble() / 5000)
             })
 

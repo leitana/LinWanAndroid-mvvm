@@ -47,9 +47,23 @@
             app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
             android:visibility="@{viewModel.isRecording ? View.VISIBLE : View.GONE}">
             <com.lx.linwanandroid_mvvm.widgets.RhythmView
-                android:id="@+id/waveView"
+                android:visibility="gone"
+                android:id="@+id/waveView1"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_90"/>
+            <com.visualizer.amplitude.AudioRecordView
+                android:id="@+id/waveView"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_90"
+                app:chunkAlignTo="center"
+                app:chunkRoundedCorners="true"
+                app:chunkSoftTransition="true"
+                app:chunkColor="@color/black"
+                app:chunkSpace="1dp"
+                app:chunkWidth="2dp"
+                app:chunkMaxHeight="48dp"
+                app:chunkMinHeight="2dp"
+                app:direction="leftToRight"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_30"
