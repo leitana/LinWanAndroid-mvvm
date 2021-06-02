@@ -144,6 +144,7 @@ dependencies {
 
     //录音正弦波
     implementation 'com.github.Jay-Goo:WaveLineView:v1.0.4'
+    implementation 'com.github.Armen101:AudioRecordView:1.0.5'
 
     implementation 'com.github.Armen101:AudioRecordView:1.0.5'
 

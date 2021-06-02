@@ -28,7 +28,7 @@ class AudioAdapter(private var datas: MutableList<AudioBean>, val mContext: Cont
 
     var isClick = false
     private val musicPlayer: MusicPlayer by lazy {
-        MusicPlayer(context())
+        MusicPlayer(mContext)
     }
 
 
