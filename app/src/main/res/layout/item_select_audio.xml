@@ -14,7 +14,7 @@
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_100"
+            android:layout_height="@dimen/dp_120"
             android:layout_marginTop="@dimen/dp_5"
             android:layout_marginBottom="@dimen/dp_5"
             android:layout_marginLeft="@dimen/dp_10"
@@ -50,7 +50,8 @@
                     android:text="@{data.fileName}"/>
 
                 <ProgressBar
-                    android:id="@+id/progressBar"
+                    android:visibility="gone"
+                    android:id="@+id/progressBar1"
                     style="@style/progressBarHorizontal_color"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp_6"
@@ -60,6 +61,17 @@
                     android:layout_marginTop="@dimen/dp_10"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+                <com.google.android.material.slider.Slider
+                    android:id="@+id/progressBar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_20"
+                    android:layout_marginEnd="@dimen/dp_50"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/imageView2"
+                    app:thumbRadius="@dimen/dp_4"
+                    android:valueFrom="0"
+                    android:valueTo="100"/>
 
                 <ImageView
                     android:id="@+id/ivPlay"

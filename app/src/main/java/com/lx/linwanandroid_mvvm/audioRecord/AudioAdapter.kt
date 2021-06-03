@@ -125,9 +125,14 @@ class AudioAdapter(private var datas: MutableList<AudioBean>, val mContext: Cont
 
                 musicPlayer.setOnSeekListener {
                     currentData.progress = it
-                    progressBar.progress = it
+                    progressBar.value = it.toFloat()
 //                    notifyItemChanged(position)
                     Log.d("progress11", it.toString())
+                }
+                progressBar.addOnChangeListener { slider, value, fromUser ->
+                    if (fromUser) {
+                        musicPlayer.setProgress(value)
+                    }
                 }
                 musicPlayer.setOnStateListener {
                     if (!it) {

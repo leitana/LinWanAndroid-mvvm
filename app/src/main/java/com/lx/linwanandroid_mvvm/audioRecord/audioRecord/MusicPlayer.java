@@ -21,6 +21,8 @@ public class MusicPlayer {
     private Timer mTimer;
     private Handler mHandler;
 
+    private float initProgress = 0;
+
     public MusicPlayer(Context context) {
         mContext = context;
         //构造函数中
@@ -59,8 +61,8 @@ public class MusicPlayer {
     public void onDestroyed() {
         if (mPlayer != null) {
             mPlayer.stop();
-            mPlayer.release();//释放资源
-            mPlayer = null;
+//            mPlayer.release();//释放资源
+//            mPlayer = null;
         }
     }
 
@@ -97,11 +99,19 @@ public class MusicPlayer {
         }
     }
 
-    public void seekTo(int progress){
+    public void seekTo(int msec){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            mPlayer.seekTo(progress, MediaPlayer.SEEK_CLOSEST);
+            mPlayer.seekTo(msec, MediaPlayer.SEEK_CLOSEST);
         } else {
-            mPlayer.seekTo(progress);
+            mPlayer.seekTo(msec);
+        }
+    }
+
+    public void setProgress(float progress) {
+        if (mPlayer != null && mPlayer.getCurrentPosition() != 0) {
+            mPlayer.seekTo((int) (mPlayer.getDuration() * progress / 100));
+        } else {
+            initProgress = progress / 100;
         }
     }
 
@@ -109,6 +119,9 @@ public class MusicPlayer {
         mPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
             public void onPrepared(MediaPlayer mp) {
+                if (initProgress > 0) {
+                    seekTo((int) (mPlayer.getDuration() * initProgress));
+                }
                 mPlayer.start();
                 mOnStateListener.isCanPlay(false);
                 //开始方法中
@@ -136,6 +149,13 @@ public class MusicPlayer {
                 mOnStateListener.isCanPlay(true);
                 stop();
                 onDestroyed();
+            }
+        });
+        mPlayer.setOnErrorListener(new MediaPlayer.OnErrorListener() {
+            @Override
+            public boolean onError(MediaPlayer mp, int what, int extra) {
+                return true;
+
             }
         });
     }
