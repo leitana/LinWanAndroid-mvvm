@@ -1,9 +1,7 @@
 package com.lx.linwanandroid_mvvm.api
 
 import com.lx.linwanandroid_mvvm.model.api.ApiResponse
-import com.lx.linwanandroid_mvvm.model.bean.Banner
-import com.lx.linwanandroid_mvvm.model.bean.HomeArticle
-import com.lx.linwanandroid_mvvm.model.bean.Login
+import com.lx.linwanandroid_mvvm.model.bean.*
 import io.reactivex.Observable
 import retrofit2.http.*
 
@@ -48,4 +46,18 @@ interface ApiService {
      */
     @GET("article/top/json")
     suspend fun getTopArticles(): ApiResponse<MutableList<HomeArticle.DatasBean>>
+
+    /**
+     * 知识体系
+     * https://www.wanandroid.com/tree/json
+     */
+    @GET("tree/json")
+    suspend fun getKnowledgeTree(): ApiResponse<MutableList<KnowledgeSystem>>
+
+    /**
+     * 知识体系下的文章
+     * https://www.wanandroid.com/article/list/0/json?cid=60
+     */
+    @GET("article/list/{page}/json")
+    suspend fun getKnowledge(@Path("page") page: Int, @Query("cid") cid: Int): ApiResponse<KnowledgeSysArticle>
 }
