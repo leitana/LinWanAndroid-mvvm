@@ -44,4 +44,8 @@ object Unbox {
     fun unBox(box: String?): String {
         return box ?: ""
     }
+
+    fun unBox(box: Any): String {
+        return box.toString()
+    }
 }

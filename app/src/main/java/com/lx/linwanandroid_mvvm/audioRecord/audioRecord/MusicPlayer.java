@@ -155,7 +155,6 @@ public class MusicPlayer {
             @Override
             public boolean onError(MediaPlayer mp, int what, int extra) {
                 return true;
-
             }
         });
     }
