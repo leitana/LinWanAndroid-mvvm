@@ -1,4 +1,4 @@
-package com.lx.linwanandroid_mvvm.ui.main.knowledge
+package com.lx.linwanandroid_mvvm.ui.main.knowledge.page
 
 import com.lx.linwanandroid_mvvm.model.api.apiData
 import com.lx.linwanandroid_mvvm.net.RetrofitHelper

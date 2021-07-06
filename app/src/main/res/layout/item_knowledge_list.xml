@@ -66,8 +66,7 @@
                 android:maxLines="2"
                 android:paddingBottom="@dimen/dp_6"
                 android:textColor="@color/item_title"
-                android:textSize="@dimen/dp_16"
-                app:htmlText="@{viewModel.title}"/>
+                android:textSize="@dimen/dp_16" />
 
             <TextView
                 android:id="@+id/tv_article_chapterName"
@@ -97,8 +96,7 @@
                     android:id="@+id/iv_like"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/ic_like_not"
-                    app:articleStar="@{viewModel.collect}"/>
+                    app:srcCompat="@drawable/ic_like_not" />
 
             </LinearLayout>
 

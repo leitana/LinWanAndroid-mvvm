@@ -1,4 +1,4 @@
-package com.lx.linwanandroid_mvvm.ui.main.knowledge
+package com.lx.linwanandroid_mvvm.ui.main.knowledge.page
 
 import androidx.lifecycle.MutableLiveData
 import com.lx.linwanandroid_mvvm.base.BaseViewModel

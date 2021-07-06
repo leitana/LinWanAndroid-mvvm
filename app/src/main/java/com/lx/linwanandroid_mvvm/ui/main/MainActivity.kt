@@ -14,6 +14,7 @@ import com.lx.linwanandroid_mvvm.base.BaseVMActivity
 import com.lx.linwanandroid_mvvm.databinding.ActivityHomeBinding
 import com.lx.linwanandroid_mvvm.model.bean.Title
 import com.lx.linwanandroid_mvvm.ui.main.home.HomeFragment
+import com.lx.linwanandroid_mvvm.ui.main.knowledge.KnowledgeTreeFragment
 import com.lx.linwanandroid_mvvm.utils.StatusBarUtil
 import com.lx.linwanandroid_mvvm.videoCall.navigation.NavigationActivity
 import com.lx.linwanandroid_mvvm.videoplayer.SimplePlayerActivity
@@ -39,7 +40,7 @@ class MainActivity: BaseVMActivity(){
     private var mIndex = FRAGMENT_HOME
 
     private var mHomeFragment: HomeFragment? = null
-//    private var mKnowledgeTreeFragment: KnowledgeTreeFragment? = null
+    private var mKnowledgeTreeFragment: KnowledgeTreeFragment? = null
 //    private var mWeChatFragment: WeChatFragment? = null
 //    private var mNavigationFragment: NavigationFragment? = null
 //    private var mProjectTreeFragment: ProjectTreeFragment? = null
@@ -91,6 +92,34 @@ class MainActivity: BaseVMActivity(){
         binding.navView.run {
             setNavigationItemSelectedListener(onDrawerNavigationItemSelectedListener)
         }
+        binding.bottomNavigation.setOnNavigationItemSelectedListener {
+            when(it.itemId) {
+                R.id.action_home -> {
+                    showFragment(FRAGMENT_HOME)
+                    true
+                }
+                R.id.action_knowledge_system -> {
+                    showFragment(FRAGMENT_KNOWLEDGE)
+                    true
+                }
+                R.id.action_wechat -> {
+                    showFragment(FRAGMENT_WECHAT)
+                    true
+                }
+                R.id.action_navigation -> {
+                    showFragment(FRAGMENT_NAVIGATION)
+                    true
+                }
+                R.id.action_project -> {
+                    showFragment(FRAGMENT_PROJECT)
+                    true
+                }
+                else -> {
+                    showFragment(FRAGMENT_HOME)
+                    true
+                }
+            }
+        }
     }
 
     private fun showFragment(index: Int) {
@@ -107,6 +136,15 @@ class MainActivity: BaseVMActivity(){
                     transaction.show(mHomeFragment!!)
                 }
             }
+            FRAGMENT_KNOWLEDGE -> {
+                binding.title = Title(getString(R.string.knowledge_system), mThemeColor)
+                if (mKnowledgeTreeFragment == null) {
+                    mKnowledgeTreeFragment = KnowledgeTreeFragment()
+                    transaction.add(binding.icContainer.id, mKnowledgeTreeFragment!!, "knowledge")
+                } else {
+                    transaction.show(mKnowledgeTreeFragment!!)
+                }
+            }
         }
 
         transaction.commit()
@@ -114,7 +152,7 @@ class MainActivity: BaseVMActivity(){
 
     private fun hideFragments(transaction: FragmentTransaction) {
         mHomeFragment?.let { transaction.hide(it) }
-//        mKnowledgeTreeFragment?.let { transaction.hide(it) }
+        mKnowledgeTreeFragment?.let { transaction.hide(it) }
 //        mWeChatFragment?.let { transaction.hide(it) }
 //        mNavigationFragment?.let { transaction.hide(it) }
 //        mProjectTreeFragment?.let { transaction.hide(it) }

@@ -6,10 +6,10 @@
     <data>
         <variable
             name="viewModel"
-            type="com.lx.linwanandroid_mvvm.ui.main.knowledge.KnowledgeViewModel" />
+            type="com.lx.linwanandroid_mvvm.ui.main.knowledge.page.KnowledgeViewModel" />
         <variable
             name="adapter"
-            type="com.lx.linwanandroid_mvvm.ui.main.knowledge.KnowledgeAdapter" />
+            type="com.lx.linwanandroid_mvvm.ui.main.knowledge.page.KnowledgeAdapter" />
     </data>
 
     <com.lx.linwanandroid_mvvm.widgets.statusView.MultiStatusView

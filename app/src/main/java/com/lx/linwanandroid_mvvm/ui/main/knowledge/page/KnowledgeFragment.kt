@@ -1,4 +1,4 @@
-package com.lx.linwanandroid_mvvm.ui.main.knowledge
+package com.lx.linwanandroid_mvvm.ui.main.knowledge.page
 
 import com.lx.linwanandroid_mvvm.R
 import com.lx.linwanandroid_mvvm.base.BaseVMFragment
@@ -13,7 +13,6 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
  * @data Created in 2021/06/28
  */
 class KnowledgeFragment: BaseVMFragment<FragmentKnowledgeBinding>(R.layout.fragment_knowledge) {
-
 
     private val knowledgeViewModel by viewModel<KnowledgeViewModel>()
     private val knowledgeAdapter: KnowledgeAdapter by lazy { KnowledgeAdapter() }

@@ -4,7 +4,8 @@ import com.lx.linwanandroid_mvvm.audioRecord.AudioViewModel
 import com.lx.linwanandroid_mvvm.ui.main.MainViewModel
 import com.lx.linwanandroid_mvvm.ui.login.LoginViewModel
 import com.lx.linwanandroid_mvvm.ui.main.home.HomeViewModel
-import com.lx.linwanandroid_mvvm.ui.main.knowledge.KnowledgeViewModel
+import com.lx.linwanandroid_mvvm.ui.main.knowledge.KnowledgeTreeViewModel
+import com.lx.linwanandroid_mvvm.ui.main.knowledge.page.KnowledgeViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -20,6 +21,7 @@ val viewModelModule = module {
     viewModel { MainViewModel() }
     viewModel { HomeViewModel() }
     viewModel { AudioViewModel() }
+    viewModel { KnowledgeTreeViewModel() }
     viewModel { KnowledgeViewModel() }
 }
 

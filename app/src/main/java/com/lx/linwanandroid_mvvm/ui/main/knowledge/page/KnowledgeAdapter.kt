@@ -1,4 +1,4 @@
-package com.lx.linwanandroid_mvvm.ui.main.knowledge
+package com.lx.linwanandroid_mvvm.ui.main.knowledge.page
 
 import android.text.Html
 import android.text.TextUtils
@@ -10,7 +10,6 @@ import com.chad.library.adapter.base.module.LoadMoreModule
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.lx.linwanandroid_mvvm.R
 import com.lx.linwanandroid_mvvm.databinding.ItemKnowledgeListBinding
-import com.lx.linwanandroid_mvvm.databinding.ItemMainListBinding
 import com.lx.linwanandroid_mvvm.model.bean.KnowledgeSysArticle
 import com.lx.linwanandroid_mvvm.utils.ImageLoader
 
