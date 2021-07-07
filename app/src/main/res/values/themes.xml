@@ -74,4 +74,7 @@
         <item name="android:minHeight">5dip</item>
         <item name="android:maxHeight">5dip</item>
     </style>
+    <style name="TabTextStyle" parent="TextAppearance.Design.Tab">
+        <item name="textAllCaps">false</item>
+    </style>
 </resources>
