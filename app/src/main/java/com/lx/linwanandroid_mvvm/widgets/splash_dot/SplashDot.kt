@@ -25,7 +25,7 @@ class SplashDot @JvmOverloads constructor(
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
 ) : LinearLayout(context, attrs, defStyleAttr) {
-    val params = ViewGroup.LayoutParams(10, 10)
+    val params = LayoutParams(20, 20)
     private val myContext = context
 
     var totalIndex: Int = 0
@@ -34,49 +34,36 @@ class SplashDot @JvmOverloads constructor(
         }
     var curIndex: Int = 0
         set(value) {
+            if (value == curIndex) {
+                return
+            }
             field = value
+            removeAllViews()
             for (index in 1..totalIndex) {
                 if (index == curIndex) {
                     val light = View(myContext)
-                    light.background = myContext?.getDrawable(R.drawable.shape_light_dot)
-                    light.setPadding(2, 2, 2, 2)
-                    light.layoutParams = params
+                    light.run {
+                        background = myContext?.getDrawable(R.drawable.shape_light_dot)
+                        setPadding(10, 10, 10, 10)
+                        layoutParams = params
+                    }
                     addView(light)
                 } else {
                     val gray = View(myContext)
-                    gray.background = myContext?.getDrawable(R.drawable.shape_gray_dot)
-                    gray.setPadding(2, 2, 2, 2)
-                    gray.layoutParams = params
+                    gray.run {
+                        background = myContext?.getDrawable(R.drawable.shape_gray_dot)
+                        setPadding(10, 10, 10, 10)
+                        layoutParams = params
+                    }
                     addView(gray)
                 }
             }
-            invalidate()
         }
 
     init {
         orientation = HORIZONTAL
         background = context?.getDrawable(R.drawable.bg_transparent)
-    }
-
-    override fun onDraw(canvas: Canvas?) {
-        super.onDraw(canvas)
-//        if (totalIndex > 0) {
-//            for (index in 1..totalIndex) {
-//                if (index == curIndex) {
-//                    val light = View(myContext)
-//                    light.background = myContext?.getDrawable(R.drawable.shape_light_dot)
-//                    light.setPadding(2, 2, 2, 2)
-//                    light.layoutParams = params
-//                    addView(light)
-//                } else {
-//                    val gray = View(myContext)
-//                    gray.background = myContext?.getDrawable(R.drawable.shape_gray_dot)
-//                    gray.setPadding(2, 2, 2, 2)
-//                    gray.layoutParams = params
-//                    addView(gray)
-//                }
-//            }
-//        }
-
+        params.marginEnd = 8
+        params.marginStart = 8
     }
 }
