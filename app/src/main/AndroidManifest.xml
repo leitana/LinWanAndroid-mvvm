@@ -30,7 +30,7 @@
         android:theme="@style/Theme.LinWanAndroidmvvm"
         tools:ignore="UnusedAttribute"
         android:requestLegacyExternalStorage="true">
-        <activity android:name=".ui.login.SplashActivity">
+        <activity android:name=".ui.login.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

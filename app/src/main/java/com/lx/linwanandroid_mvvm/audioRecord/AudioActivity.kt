@@ -42,6 +42,7 @@ class AudioActivity: BaseVMActivity() {
 
     override fun initView() {
         binding.run {
+            audioAdapter.setHasStableIds(true)
             viewModel = audioViewModel
             adapter = audioAdapter
             handler = this@AudioActivity

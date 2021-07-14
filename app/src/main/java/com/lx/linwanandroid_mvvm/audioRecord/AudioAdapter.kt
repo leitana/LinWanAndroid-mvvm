@@ -2,10 +2,8 @@ package com.lx.linwanandroid_mvvm.audioRecord
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.os.Handler
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -15,7 +13,6 @@ import com.lx.linwanandroid_mvvm.audioRecord.audioRecord.MusicPlayer
 import com.lx.linwanandroid_mvvm.databinding.ItemNormalAudioBinding
 import com.lx.linwanandroid_mvvm.databinding.ItemSelectAudioBinding
 import com.lx.linwanandroid_mvvm.ext.getTime
-import com.lx.linwanandroid_mvvm.utils.context
 
 /**
  * @title：AudioAdapter
@@ -89,25 +86,25 @@ class AudioAdapter(private var datas: MutableList<AudioBean>, val mContext: Cont
                     notifyItemChanged(position)
                 }
 
-                ivPlay.setOnTouchListener { v, event ->
-                    when(event.action) {
-                        MotionEvent.ACTION_DOWN -> {
-                            isClick = true
-                            Handler().postDelayed(Runnable {
-                                isClick = false
-                            }, 500)
-                            false
-                        }
-                        MotionEvent.ACTION_UP -> {
-                            isClick = false
-                            false
-                        }
-                        else -> {
-                            false
-                        }
-
-                    }
-                }
+//                ivPlay.setOnTouchListener { v, event ->
+//                    when(event.action) {
+//                        MotionEvent.ACTION_DOWN -> {
+//                            isClick = true
+//                            Handler().postDelayed(Runnable {
+//                                isClick = false
+//                            }, 500)
+//                            false
+//                        }
+//                        MotionEvent.ACTION_UP -> {
+//                            isClick = false
+//                            false
+//                        }
+//                        else -> {
+//                            false
+//                        }
+//
+//                    }
+//                }
 
                 ivPlay.setOnClickListener {
                     if (ivPlay.drawable.current.constantState ==
@@ -147,6 +144,10 @@ class AudioAdapter(private var datas: MutableList<AudioBean>, val mContext: Cont
     }
 
     override fun getItemCount(): Int = datas.size
+
+    override fun getItemId(position: Int): Long {
+        return datas[position].hashCode().toLong()
+    }
 
     class ViewHolderNormal(itemView: View): RecyclerView.ViewHolder(itemView) {
         val binding = DataBindingUtil.bind<ItemNormalAudioBinding>(itemView)!!

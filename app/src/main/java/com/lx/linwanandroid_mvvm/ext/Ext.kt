@@ -2,12 +2,14 @@ package com.lx.linwanandroid_mvvm.ext
 
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
 import com.lx.linwanandroid_mvvm.R
+import kotlin.reflect.KClass
 
 /**
  * @title：Ext
@@ -16,6 +18,20 @@ import com.lx.linwanandroid_mvvm.R
  * @author linxiao
  * @data Created in 2021/03/31
  */
+fun <T : Activity> Activity.startActivity(clazz: KClass<T>, block: (Intent.() -> Unit)? = null) {
+    val intent = Intent(this, clazz.java).apply {
+        block?.invoke(this)
+    }
+    startActivity(intent)
+}
+
+fun <T : Activity> Fragment.startActivity(clazz: KClass<T>, block: (Intent.() -> Unit)? = null) {
+    val intent = Intent(activity, clazz.java).apply {
+        block?.invoke(this)
+    }
+    startActivity(intent)
+}
+
 fun Fragment.showToast(string: String){
     Toast.makeText(this.activity, string, Toast.LENGTH_SHORT).show()
 }
