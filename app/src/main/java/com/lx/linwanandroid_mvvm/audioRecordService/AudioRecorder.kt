@@ -1,6 +1,7 @@
 package com.lx.linwanandroid_mvvm.audioRecordService
 
 import android.media.MediaRecorder
+import android.os.Build
 import android.os.Handler
 import android.util.Log
 import java.io.File
@@ -72,15 +73,69 @@ object AudioRecorder: RecorderContract.Recorder {
     }
 
     override fun resumeRecording() {
-        TODO("Not yet implemented")
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && _isPaused.get()) {
+            try {
+                recorder!!.resume()
+                updateTime = System.currentTimeMillis()
+                scheduleRecordingTimeUpdate()
+                if (recorderCallback != null) {
+                    recorderCallback!!.onResumeRecord()
+                }
+                _isPaused.set(false)
+            } catch (e: IllegalStateException) {
+                Log.e(TAG, e.message)
+                if (recorderCallback != null) {
+                    recorderCallback!!.onError(e)
+                }
+            }
+        }
     }
 
     override fun pauseRecording() {
-        TODO("Not yet implemented")
+        if (_isRecording.get()) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                if (!_isPaused.get()) {
+                    try {
+                        recorder!!.pause()
+                        durationMills += System.currentTimeMillis() - updateTime
+                        pauseRecordingTimer()
+                        if (recorderCallback != null) {
+                            recorderCallback!!.onPauseRecord()
+                        }
+                        _isPaused.set(true)
+                    } catch (e: IllegalStateException){
+                        Log.e(TAG, e.message)
+                        if (recorderCallback != null) {
+                            recorderCallback!!.onError(e)
+                        }
+                    }
+                }
+            } else {
+                stopRecording()
+            }
+        }
     }
 
     override fun stopRecording() {
-        TODO("Not yet implemented")
+        if (_isRecording.get()) {
+            stopRecordingTimer()
+            try {
+                recorder!!.stop()
+            } catch (e: RuntimeException) {
+                Log.e(TAG, "stopRecording() problems")
+            }
+            recorder!!.release()
+            if (recorderCallback != null) {
+                recorderCallback!!.onStopRecord(recordFile)
+            }
+            durationMills = 0
+            recordFile = null
+            _isRecording.set(false)
+            _isPaused.set(false)
+            recorder = null
+        } else {
+            Log.e(TAG, "Recording has already stopped or hasn't started")
+        }
     }
 
     private fun scheduleRecordingTimeUpdate(){
@@ -92,11 +147,21 @@ object AudioRecorder: RecorderContract.Recorder {
                     updateTime = curTime
                     recorderCallback!!.onRecordProgress(durationMills, recorder!!.maxAmplitude)
                 } catch (e: IllegalStateException) {
-                    Log.d("AudioRecorder", e.message)
+                    Log.e("AudioRecorder", e.message)
                 }
                 scheduleRecordingTimeUpdate()
             }
         }, RECORDING_VISUALIZATION_INTERVAL)
+    }
+
+    private fun stopRecordingTimer() {
+        handler.removeCallbacksAndMessages(null)
+        updateTime = 0
+    }
+
+    private fun pauseRecordingTimer() {
+        handler.removeCallbacksAndMessages(null)
+        updateTime = 0
     }
 
     override val isRecording: Boolean
