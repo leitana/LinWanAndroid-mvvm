@@ -4,6 +4,8 @@ import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.Service
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Build
@@ -80,6 +82,14 @@ class RecordingService: Service() {
             chan.enableLights(false)
             chan.enableVibration(false)
             notificationManager.createNotificationChannel(chan)
+        }
+    }
+
+    class StopRecordingReceiver : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent) {
+            val stopIntent = Intent(context, RecordingService::class.java)
+            stopIntent.action = intent.action
+            context.startService(stopIntent)
         }
     }
 }
