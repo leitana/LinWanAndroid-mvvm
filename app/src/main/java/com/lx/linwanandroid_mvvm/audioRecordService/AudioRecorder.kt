@@ -18,6 +18,9 @@ import java.util.concurrent.atomic.AtomicBoolean
 object AudioRecorder: RecorderContract.Recorder {
     /** Time interval for Recording progress visualisation.  */
     const val RECORDING_VISUALIZATION_INTERVAL: Long = 13 //mills
+    const val PLAYBACK_VISUALIZATION_INTERVAL: Long =
+        ((2.1 * 13).toLong())//mills
+
     const val TAG: String = "AudioRecorder"
 
     private val _isRecording = AtomicBoolean(false)
@@ -31,7 +34,7 @@ object AudioRecorder: RecorderContract.Recorder {
 
     private var recorderCallback: RecorderContract.RecorderCallback? = null
 
-    override fun setRecorderCallback(callback: RecorderContract.RecorderCallback?) {
+    override fun setRecorderCallback(callback: RecorderContract.RecorderCallback) {
         this.recorderCallback = callback
     }
 

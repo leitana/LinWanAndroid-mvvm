@@ -1,9 +1,6 @@
 package com.lx.linwanandroid_mvvm.audioRecordService
 
-import android.app.Notification
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.app.Service
+import android.app.*
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -12,8 +9,10 @@ import android.os.Build
 import android.os.IBinder
 import android.widget.RemoteViews
 import androidx.annotation.RequiresApi
+import androidx.core.app.NotificationCompat
 import com.lx.linwanandroid_mvvm.R
 import com.lx.linwanandroid_mvvm.audioRecordService.RecorderContract.RecorderCallback
+import com.lx.linwanandroid_mvvm.ui.main.MainActivity
 import java.io.File
 
 /**
@@ -27,11 +26,18 @@ class RecordingService: Service() {
     private val CHANNEL_NAME = "Default"
     private val CHANNEL_ID = "com.lx.linwanandroid_mvvm.NotificationId"
 
+    val ACTION_STOP_RECORDING = "ACTION_STOP_RECORDING"
+    val ACTION_PAUSE_RECORDING = "ACTION_PAUSE_RECORDING"
+
+    private val NOTIF_ID = 101
 
     private val audioRecorder: RecorderContract.Recorder = AudioRecorder
     private lateinit var recorderCallback: RecorderCallback
     private lateinit var notificationManager: NotificationManager
     private lateinit var remoteViewsSmall: RemoteViews
+    private var notification: Notification? = null
+
+    private var started = false
 
     override fun onBind(intent: Intent?): IBinder? {
         throw UnsupportedOperationException("Not yet implemented")
@@ -40,7 +46,7 @@ class RecordingService: Service() {
     override fun onCreate() {
         super.onCreate()
         recorderCallback = object: RecorderCallback{
-            override fun onStartRecord(output: File?) {
+            override fun onStartRecord(output: File) {
 
             }
 
@@ -68,6 +74,33 @@ class RecordingService: Service() {
             createNotificationChannel(CHANNEL_ID, CHANNEL_NAME)
         }
         remoteViewsSmall = RemoteViews(packageName, R.layout.layout_record_notification_small)
+        remoteViewsSmall.setOnClickPendingIntent(R.id.btn_recording_pause, getPendingSelfIntent(
+            applicationContext, ACTION_PAUSE_RECORDING
+        ))
+        remoteViewsSmall.setOnClickPendingIntent(R.id.btn_recording_stop, getPendingSelfIntent(
+            applicationContext, ACTION_STOP_RECORDING
+        ))
+        remoteViewsSmall.setTextViewText(R.id.txt_recording_progress, "正在录音...")
+
+        // Create notification builder.
+        val builder: NotificationCompat.Builder = NotificationCompat.Builder(this, CHANNEL_ID)
+        builder.setWhen(System.currentTimeMillis())
+        builder.setSmallIcon(R.drawable.ic_record_rec)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            builder.priority = NotificationManager.IMPORTANCE_MAX
+        } else {
+            builder.priority = Notification.PRIORITY_MAX
+        }
+
+        builder.setContentIntent(createContentIntent())
+        builder.setCustomContentView(remoteViewsSmall)
+        //		builder.setCustomBigContentView(remoteViewsBig);
+        builder.setOnlyAlertOnce(true)
+        builder.setDefaults(0)
+        builder.setSound(null)
+        notification = builder.build()
+        startForeground(NOTIF_ID, notification)
+        started = true
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -83,6 +116,23 @@ class RecordingService: Service() {
             chan.enableVibration(false)
             notificationManager.createNotificationChannel(chan)
         }
+    }
+
+    private fun createContentIntent(): PendingIntent? {
+        // Create notification default intent.
+        val intent = Intent(applicationContext, MainActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_PREVIOUS_IS_TOP
+        return PendingIntent.getActivity(applicationContext, 0, intent, 0)
+    }
+
+    private fun stopForegroundService() {
+        audioRecorder
+    }
+
+    fun getPendingSelfIntent(context: Context?, action: String?): PendingIntent? {
+        val intent = Intent(context, StopRecordingReceiver::class.java)
+        intent.action = action
+        return PendingIntent.getBroadcast(context, 10, intent, 0)
     }
 
     class StopRecordingReceiver : BroadcastReceiver() {

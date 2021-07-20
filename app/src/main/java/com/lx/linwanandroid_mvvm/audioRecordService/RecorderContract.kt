@@ -19,7 +19,7 @@ import java.io.File
 
 interface RecorderContract {
     interface RecorderCallback {
-        fun onStartRecord(output: File?)
+        fun onStartRecord(output: File)
         fun onPauseRecord()
         fun onResumeRecord()
         fun onRecordProgress(mills: Long, amp: Int)
@@ -28,7 +28,7 @@ interface RecorderContract {
     }
 
     interface Recorder {
-        fun setRecorderCallback(callback: RecorderCallback?)
+        fun setRecorderCallback(callback: RecorderCallback)
         fun startRecording(outputFile: String, channelCount: Int, sampleRate: Int, bitrate: Int)
         fun resumeRecording()
         fun pauseRecording()
