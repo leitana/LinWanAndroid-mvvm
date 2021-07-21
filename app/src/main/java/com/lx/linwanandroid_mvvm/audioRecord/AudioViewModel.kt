@@ -1,12 +1,18 @@
 package com.lx.linwanandroid_mvvm.audioRecord
 
+import android.content.Intent
 import android.media.MediaPlayer
 import androidx.lifecycle.MutableLiveData
+import cn.rongcloud.rtc.core.ContextUtils.getApplicationContext
 import com.blankj.utilcode.util.FileUtils
 import com.blankj.utilcode.util.PathUtils
+import com.blankj.utilcode.util.ServiceUtils.startService
 import com.lx.linwanandroid_mvvm.audioRecord.audioRecord.AudioRecorder
 import com.lx.linwanandroid_mvvm.audioRecord.audioRecord.RecorderListener
+import com.lx.linwanandroid_mvvm.audioRecordService.RecordingService
 import com.lx.linwanandroid_mvvm.base.BaseViewModel
+import com.lx.linwanandroid_mvvm.constant.Constant.ACTION_START_RECORDING_SERVICE
+import com.lx.linwanandroid_mvvm.utils.context
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.File
@@ -138,6 +144,12 @@ class AudioViewModel: BaseViewModel() {
             mediaPlayer.reset()
             mediaPlayer.release()
         }
+    }
+    
+    fun startRecordService(){
+        val intent: Intent = Intent(context(), RecordingService::class.java)
+        intent.action = ACTION_START_RECORDING_SERVICE
+        startService(intent)
     }
 
 }

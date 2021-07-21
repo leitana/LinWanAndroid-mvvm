@@ -13,7 +13,7 @@ import java.util.*
  */
 class AppRecorderImpl private constructor(recorder: RecorderContract.Recorder) : AppRecorder {
     private var audioRecorder: RecorderContract.Recorder = recorder
-    private lateinit var recorderCallback: RecorderContract.RecorderCallback
+    private var recorderCallback: RecorderContract.RecorderCallback
     private var appCallbacks: MutableList<RecorderContract.RecorderCallback> = mutableListOf()
 
     private val recordingData: MutableList<Int> = mutableListOf()
@@ -48,74 +48,84 @@ class AppRecorderImpl private constructor(recorder: RecorderContract.Recorder) :
 
             override fun onPauseRecord() {
                 onRecordingPaused()
+                pauseRecordingTimer()
             }
 
             override fun onResumeRecord() {
-                TODO("Not yet implemented")
+                scheduleRecordingTimeUpdate()
+                onRecordingResumed()
             }
 
             override fun onRecordProgress(mills: Long, amp: Int) {
-                TODO("Not yet implemented")
+                apmpPool.add(amp)
             }
 
-            override fun onStopRecord(output: File?) {
-                TODO("Not yet implemented")
+            override fun onStopRecord(output: File) {
+                stopRecordingTimer()
+                onRecordingStopped(output)
             }
 
             override fun onError(throwable: Exception?) {
-                TODO("Not yet implemented")
+                onRecordingError(throwable!!)
             }
-
         }
     }
 
     override fun addRecordingCallback(recorderCallback: RecorderContract.RecorderCallback) {
-        TODO("Not yet implemented")
+        appCallbacks.add(recorderCallback)
     }
 
     override fun removeRecordingCallback(recorderCallback: RecorderContract.RecorderCallback) {
-        TODO("Not yet implemented")
+        appCallbacks.remove(recorderCallback)
     }
 
     override fun setRecorder(recorder: RecorderContract.Recorder) {
-        TODO("Not yet implemented")
+        audioRecorder = recorder
+        audioRecorder.setRecorderCallback(recorderCallback)
     }
 
-    override fun startRecording(
-        filePath: String,
-        channelCount: Int,
-        sampleRate: Int,
-        bitrate: Int
-    ) {
-        TODO("Not yet implemented")
+    override fun startRecording(filePath: String, channelCount: Int, sampleRate: Int, bitrate: Int) {
+        if (!audioRecorder.isRecording) {
+            audioRecorder.startRecording(filePath, channelCount, sampleRate, bitrate)
+        }
     }
 
     override fun pauseRecording() {
-        TODO("Not yet implemented")
+        if (audioRecorder.isRecording) {
+            audioRecorder.pauseRecording()
+        }
     }
 
     override fun resumeRecording() {
-        TODO("Not yet implemented")
+        if (audioRecorder.isPaused) {
+            audioRecorder.resumeRecording()
+        }
     }
 
     override fun stopRecording() {
-        TODO("Not yet implemented")
+        if (audioRecorder.isRecording) {
+            audioRecorder.stopRecording()
+        }
     }
 
     override fun getRecordingDuration(): Long {
-        TODO("Not yet implemented")
+        return durationMills
     }
 
     override fun isRecording(): Boolean {
-        TODO("Not yet implemented")
+        return audioRecorder.isRecording
     }
 
     override fun isPaused(): Boolean {
-        TODO("Not yet implemented")
+        return audioRecorder.isPaused
     }
 
     override fun release() {
-        TODO("Not yet implemented")
+        stopRecordingTimer()
+        recordingData.clear()
+        apmpPool.clear()
+        audioRecorder.stopRecording()
+        appCallbacks.clear()
     }
 
     private fun onRecordingStarted(output: File){
@@ -188,5 +198,22 @@ class AppRecorderImpl private constructor(recorder: RecorderContract.Recorder) :
             recordingData.add(amp)
             onRecordingProgress(durationMills, amp)
         }
+    }
+
+    private fun pauseRecordingTimer(){
+        timerProgress?.run {
+            cancel()
+            purge()
+        }
+        updateTime = 0
+    }
+
+    private fun stopRecordingTimer() {
+        readProgress()
+        timerProgress?.run {
+            cancel()
+            purge()
+        }
+        updateTime = 0
     }
 }

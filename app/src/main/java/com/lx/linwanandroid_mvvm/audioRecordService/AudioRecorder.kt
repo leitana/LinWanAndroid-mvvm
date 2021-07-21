@@ -129,7 +129,7 @@ object AudioRecorder: RecorderContract.Recorder {
             }
             recorder!!.release()
             if (recorderCallback != null) {
-                recorderCallback!!.onStopRecord(recordFile)
+                recordFile?.let { recorderCallback!!.onStopRecord(it) }
             }
             durationMills = 0
             recordFile = null

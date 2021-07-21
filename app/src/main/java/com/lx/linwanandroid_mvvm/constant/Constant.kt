@@ -17,4 +17,7 @@ object Constant {
     const val BASE_URL = "https://www.wanandroid.com/"
 
     const val THEME_COLOR = "theme_color"
+
+    const val ACTION_START_RECORDING_SERVICE = "ACTION_START_RECORDING_SERVICE"
+    const val ACTION_STOP_RECORDING_SERVICE = "ACTION_STOP_RECORDING_SERVICE"
 }

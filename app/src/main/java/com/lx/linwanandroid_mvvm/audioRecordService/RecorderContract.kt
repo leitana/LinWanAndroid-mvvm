@@ -23,7 +23,7 @@ interface RecorderContract {
         fun onPauseRecord()
         fun onResumeRecord()
         fun onRecordProgress(mills: Long, amp: Int)
-        fun onStopRecord(output: File?)
+        fun onStopRecord(output: File)
         fun onError(throwable: Exception?)
     }
 

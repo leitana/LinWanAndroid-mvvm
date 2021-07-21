@@ -12,6 +12,8 @@ import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import com.lx.linwanandroid_mvvm.R
 import com.lx.linwanandroid_mvvm.audioRecordService.RecorderContract.RecorderCallback
+import com.lx.linwanandroid_mvvm.constant.Constant.ACTION_START_RECORDING_SERVICE
+import com.lx.linwanandroid_mvvm.constant.Constant.ACTION_STOP_RECORDING_SERVICE
 import com.lx.linwanandroid_mvvm.ui.main.MainActivity
 import java.io.File
 
@@ -31,6 +33,7 @@ class RecordingService: Service() {
 
     private val NOTIF_ID = 101
 
+    private var appRecorder: AppRecorder? = null
     private val audioRecorder: RecorderContract.Recorder = AudioRecorder
     private lateinit var recorderCallback: RecorderCallback
     private lateinit var notificationManager: NotificationManager
@@ -45,27 +48,57 @@ class RecordingService: Service() {
 
     override fun onCreate() {
         super.onCreate()
+        appRecorder = AppRecorderImpl.getInstance(audioRecorder)
         recorderCallback = object: RecorderCallback{
             override fun onStartRecord(output: File) {
-
+                updateNotificationResume()
             }
 
             override fun onPauseRecord() {
+                updateNotificationPause()
             }
 
             override fun onResumeRecord() {
+                updateNotificationResume()
             }
 
             override fun onRecordProgress(mills: Long, amp: Int) {
             }
 
-            override fun onStopRecord(output: File?) {
+            override fun onStopRecord(output: File) {
+                stopForegroundService()
             }
 
             override fun onError(throwable: Exception?) {
             }
         }
-        audioRecorder.setRecorderCallback(recorderCallback)
+//        audioRecorder.setRecorderCallback(recorderCallback)
+    }
+
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        if (intent != null) {
+            val action = intent.action
+            if (action != null && action.isNotEmpty()) {
+                when (action) {
+                    ACTION_START_RECORDING_SERVICE -> if (!started) {
+                        startForegroundService()
+                    }
+                    ACTION_STOP_RECORDING_SERVICE -> stopForegroundService()
+                    ACTION_STOP_RECORDING -> stopRecording()
+                    ACTION_PAUSE_RECORDING -> if (appRecorder!!.isPaused()) {
+                        appRecorder!!.resumeRecording()
+                    } else {
+                        appRecorder!!.pauseRecording()
+                    }
+                }
+            }
+        }
+        return super.onStartCommand(intent, flags, startId)
+    }
+
+    private fun stopRecording() {
+        appRecorder!!.stopRecording()
+        stopForegroundService()
     }
 
     fun startForegroundService() {
@@ -118,6 +151,22 @@ class RecordingService: Service() {
         }
     }
 
+    private fun updateNotificationResume() {
+        if (started) {
+            remoteViewsSmall.setTextViewText(R.id.txt_recording_progress, "正在录音...")
+            remoteViewsSmall.setImageViewResource(R.id.btn_recording_pause, R.drawable.ic_pause_new)
+            notificationManager.notify(NOTIF_ID, notification)
+        }
+    }
+
+    private fun updateNotificationPause() {
+        if (started) {
+            remoteViewsSmall.setTextViewText(R.id.txt_recording_progress, "已暂停")
+            remoteViewsSmall.setImageViewResource(R.id.btn_recording_pause, R.drawable.ic_recording_yellow)
+            notificationManager.notify(NOTIF_ID, notification)
+        }
+    }
+
     private fun createContentIntent(): PendingIntent? {
         // Create notification default intent.
         val intent = Intent(applicationContext, MainActivity::class.java)
@@ -126,7 +175,10 @@ class RecordingService: Service() {
     }
 
     private fun stopForegroundService() {
-        audioRecorder
+        appRecorder!!.removeRecordingCallback(recorderCallback)
+        stopForeground(true)
+        stopSelf()
+        started = false
     }
 
     fun getPendingSelfIntent(context: Context?, action: String?): PendingIntent? {
