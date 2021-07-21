@@ -9,6 +9,9 @@ import com.blankj.utilcode.util.PathUtils
 import com.blankj.utilcode.util.ServiceUtils.startService
 import com.lx.linwanandroid_mvvm.audioRecord.audioRecord.AudioRecorder
 import com.lx.linwanandroid_mvvm.audioRecord.audioRecord.RecorderListener
+import com.lx.linwanandroid_mvvm.audioRecordService.AppRecorder
+import com.lx.linwanandroid_mvvm.audioRecordService.AppRecorderImpl
+import com.lx.linwanandroid_mvvm.audioRecordService.RecorderContract
 import com.lx.linwanandroid_mvvm.audioRecordService.RecordingService
 import com.lx.linwanandroid_mvvm.base.BaseViewModel
 import com.lx.linwanandroid_mvvm.constant.Constant.ACTION_START_RECORDING_SERVICE
@@ -49,60 +52,66 @@ class AudioViewModel: BaseViewModel() {
 
     private val audioTimeString: StringBuilder = StringBuilder("0:0")
 
+    private val audioRecorder: RecorderContract.Recorder =
+        com.lx.linwanandroid_mvvm.audioRecordService.AudioRecorder
+    val appRecorder: AppRecorder = AppRecorderImpl.getInstance(audioRecorder)!!
+
     fun recordRecord(outFile: String) {
-        AudioRecorder.setRecorderCallback(object : RecorderListener.RecorderCallback {
-            override fun onStartRecord(output: File) {
-                recordState.value = RecordStates.Start
-                isRecording.value = true
-            }
-
-            override fun onPauseRecord() {
-                recordState.value = RecordStates.Pause
+//        AudioRecorder.setRecorderCallback(object : RecorderListener.RecorderCallback {
+//            override fun onStartRecord(output: File) {
+//                recordState.value = RecordStates.Start
 //                isRecording.value = true
-            }
-
-            override fun onResumeRecord() {
-                recordState.value = RecordStates.Resume
-                isRecording.value = true
-            }
-
-            override fun onRecordProgress(mills: Long, amp: Int) {
-//                isRecording.value = AudioRecorder.isRecording()
-                audioTime.value = mills
-                audioAmplitude.value = amp
-
-                audioTimeString.run {
-                    append((audioTime.value!! / (60 * 1000)))
-                    append(":")
-                    append((audioTime.value!! % (60 * 1000)))
-                }
-
-            }
-
-            override fun onStopRecord(output: File) {
-                recordState.value = RecordStates.Stop
-                isRecording.value = false
-            }
-
-            override fun onError(throwable: Exception) {
-                recordState.value = RecordStates.Error
-                isRecording.value = false
-            }
-
-        })
-        AudioRecorder.startRecording(outFile)
+//            }
+//
+//            override fun onPauseRecord() {
+//                recordState.value = RecordStates.Pause
+////                isRecording.value = true
+//            }
+//
+//            override fun onResumeRecord() {
+//                recordState.value = RecordStates.Resume
+//                isRecording.value = true
+//            }
+//
+//            override fun onRecordProgress(mills: Long, amp: Int) {
+////                isRecording.value = AudioRecorder.isRecording()
+//                audioTime.value = mills
+//                audioAmplitude.value = amp
+//
+//                audioTimeString.run {
+//                    append((audioTime.value!! / (60 * 1000)))
+//                    append(":")
+//                    append((audioTime.value!! % (60 * 1000)))
+//                }
+//
+//            }
+//
+//            override fun onStopRecord(output: File) {
+//                recordState.value = RecordStates.Stop
+//                isRecording.value = false
+//            }
+//
+//            override fun onError(throwable: Exception) {
+//                recordState.value = RecordStates.Error
+//                isRecording.value = false
+//            }
+//
+//        })
+//        AudioRecorder.startRecording(outFile)
+        appRecorder.startRecording(outFile)
+        startRecordService()
     }
 
     fun resumeAudio() {
-        AudioRecorder.resumeRecording()
+//        AudioRecorder.resumeRecording()
     }
 
     fun pauseAudio() {
-        AudioRecorder.pauseRecording()
+//        AudioRecorder.pauseRecording()
     }
 
     fun stopAudio() {
-        AudioRecorder.stopRecording()
+//        AudioRecorder.stopRecording()
     }
 
 //    suspend fun getAudioList(path: String){
@@ -147,7 +156,7 @@ class AudioViewModel: BaseViewModel() {
     }
     
     fun startRecordService(){
-        val intent: Intent = Intent(context(), RecordingService::class.java)
+        val intent = Intent(context(), RecordingService::class.java)
         intent.action = ACTION_START_RECORDING_SERVICE
         startService(intent)
     }

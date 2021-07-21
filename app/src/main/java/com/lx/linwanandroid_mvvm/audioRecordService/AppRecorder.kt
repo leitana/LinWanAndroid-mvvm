@@ -11,7 +11,7 @@ interface AppRecorder {
     fun addRecordingCallback(recorderCallback: RecorderContract.RecorderCallback)
     fun removeRecordingCallback(recorderCallback: RecorderContract.RecorderCallback)
     fun setRecorder(recorder: RecorderContract.Recorder)
-    fun startRecording(filePath: String, channelCount: Int, sampleRate: Int, bitrate: Int)
+    fun startRecording(filePath: String, channelCount: Int = 1, sampleRate: Int = 44100, bitrate: Int = 96000)
     fun pauseRecording()
     fun resumeRecording()
     fun stopRecording()

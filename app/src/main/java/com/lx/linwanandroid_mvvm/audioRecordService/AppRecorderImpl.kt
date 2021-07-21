@@ -69,6 +69,7 @@ class AppRecorderImpl private constructor(recorder: RecorderContract.Recorder) :
                 onRecordingError(throwable!!)
             }
         }
+        audioRecorder.setRecorderCallback(recorderCallback)
     }
 
     override fun addRecordingCallback(recorderCallback: RecorderContract.RecorderCallback) {
@@ -81,7 +82,7 @@ class AppRecorderImpl private constructor(recorder: RecorderContract.Recorder) :
 
     override fun setRecorder(recorder: RecorderContract.Recorder) {
         audioRecorder = recorder
-        audioRecorder.setRecorderCallback(recorderCallback)
+//        audioRecorder.setRecorderCallback(recorderCallback)
     }
 
     override fun startRecording(filePath: String, channelCount: Int, sampleRate: Int, bitrate: Int) {

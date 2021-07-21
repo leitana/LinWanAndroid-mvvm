@@ -29,7 +29,7 @@ interface RecorderContract {
 
     interface Recorder {
         fun setRecorderCallback(callback: RecorderCallback)
-        fun startRecording(outputFile: String, channelCount: Int, sampleRate: Int, bitrate: Int)
+        fun startRecording(outputFile: String, channelCount: Int = 1, sampleRate: Int = 44100, bitrate: Int = 96000)
         fun resumeRecording()
         fun pauseRecording()
         fun stopRecording()

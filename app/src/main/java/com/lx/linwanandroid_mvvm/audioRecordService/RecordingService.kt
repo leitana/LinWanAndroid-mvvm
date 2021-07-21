@@ -72,6 +72,7 @@ class RecordingService: Service() {
             override fun onError(throwable: Exception?) {
             }
         }
+        appRecorder!!.addRecordingCallback(recorderCallback)
 //        audioRecorder.setRecorderCallback(recorderCallback)
     }
 
