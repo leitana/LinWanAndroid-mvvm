@@ -57,6 +57,10 @@ object AudioRecorder: RecorderContract.Recorder {
                 updateTime = System.currentTimeMillis()
                 _isRecording.set(true)
                 scheduleRecordingTimeUpdate()
+                if (recorderCallback != null) {
+                    recorderCallback!!.onStartRecord(recordFile!!)
+                }
+                _isPaused.set(false)
             } catch (e: IOException) {
                 Log.e("TAG", "prepare() failed")
                 if (recorderCallback != null) {

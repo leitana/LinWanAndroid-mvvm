@@ -82,7 +82,9 @@ class AudioActivity: BaseVMActivity() {
 
     override fun initData() {
         lifecycleScope.launch {
-            audioViewModel.getAudioList()
+            if (audioViewModel.isRecording.value == false) {
+                audioViewModel.getAudioList()
+            }
         }
     }
 
@@ -104,6 +106,7 @@ class AudioActivity: BaseVMActivity() {
                         binding.root.ivPause.setImageResource(R.drawable.ic_resume)
                     }
                     AudioViewModel.RecordStates.Stop -> {
+                        binding.root.waveView.recreate()
                         initData()
                     }
                     AudioViewModel.RecordStates.Error -> {

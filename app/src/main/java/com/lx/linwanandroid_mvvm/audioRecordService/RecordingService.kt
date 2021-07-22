@@ -11,6 +11,7 @@ import android.widget.RemoteViews
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import com.lx.linwanandroid_mvvm.R
+import com.lx.linwanandroid_mvvm.audioRecord.AudioActivity
 import com.lx.linwanandroid_mvvm.audioRecordService.RecorderContract.RecorderCallback
 import com.lx.linwanandroid_mvvm.constant.Constant.ACTION_START_RECORDING_SERVICE
 import com.lx.linwanandroid_mvvm.constant.Constant.ACTION_STOP_RECORDING_SERVICE
@@ -170,7 +171,7 @@ class RecordingService: Service() {
 
     private fun createContentIntent(): PendingIntent? {
         // Create notification default intent.
-        val intent = Intent(applicationContext, MainActivity::class.java)
+        val intent = Intent(applicationContext, AudioActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_PREVIOUS_IS_TOP
         return PendingIntent.getActivity(applicationContext, 0, intent, 0)
     }

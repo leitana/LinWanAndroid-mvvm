@@ -98,20 +98,62 @@ class AudioViewModel: BaseViewModel() {
 //
 //        })
 //        AudioRecorder.startRecording(outFile)
+        val recorderCallback: RecorderContract.RecorderCallback = object :
+            RecorderContract.RecorderCallback{
+            override fun onStartRecord(output: File) {
+                recordState.value = RecordStates.Start
+                isRecording.value = true
+            }
+
+            override fun onPauseRecord() {
+                recordState.value = RecordStates.Pause
+            }
+
+            override fun onResumeRecord() {
+                recordState.value = RecordStates.Resume
+                isRecording.value = true
+            }
+
+            override fun onRecordProgress(mills: Long, amp: Int) {
+                audioTime.postValue(mills)
+                audioAmplitude.postValue(amp)
+
+                audioTimeString.run {
+                    append((audioTime.value!! / (60 * 1000)))
+                    append(":")
+                    append((audioTime.value!! % (60 * 1000)))
+                }
+            }
+
+            override fun onStopRecord(output: File) {
+                recordState.value = RecordStates.Stop
+                isRecording.value = false
+            }
+
+            override fun onError(throwable: Exception?) {
+                recordState.value = RecordStates.Error
+                isRecording.value = false
+            }
+
+        }
+        appRecorder.addRecordingCallback(recorderCallback)
         appRecorder.startRecording(outFile)
         startRecordService()
     }
 
     fun resumeAudio() {
 //        AudioRecorder.resumeRecording()
+        appRecorder.resumeRecording()
     }
 
     fun pauseAudio() {
 //        AudioRecorder.pauseRecording()
+        appRecorder.pauseRecording()
     }
 
     fun stopAudio() {
 //        AudioRecorder.stopRecording()
+        appRecorder.stopRecording()
     }
 
 //    suspend fun getAudioList(path: String){
