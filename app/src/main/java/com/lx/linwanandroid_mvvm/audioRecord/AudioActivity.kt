@@ -5,6 +5,7 @@ import android.content.Context
 import android.os.Environment
 import android.os.Environment.getExternalStorageDirectory
 import android.util.Log
+import android.view.KeyEvent
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.TranslateAnimation
@@ -38,7 +39,6 @@ class AudioActivity: BaseVMActivity() {
     private val audioAdapter by lazy {
         AudioAdapter(mutableListOf(), this@AudioActivity)
     }
-
 
     override fun initView() {
         binding.run {
@@ -78,7 +78,6 @@ class AudioActivity: BaseVMActivity() {
             }
         }
     }
-
 
     override fun initData() {
         lifecycleScope.launch {
@@ -175,4 +174,11 @@ class AudioActivity: BaseVMActivity() {
         onRequestPermissionsResult(requestCode, grantResults)
     }
 
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event!!.action == KeyEvent.ACTION_DOWN) {
+            moveTaskToBack(true)
+            return true
+        }
+        return super.onKeyDown(keyCode, event)
+    }
 }
