@@ -27,15 +27,21 @@ class RongCallActivity: AppCompatActivity() {
         RongIM.connect("TXiVm9Mt1A0YSZ8wzy0chBwo9Rf+3zrQtSGjoOpwbkc=@a2e0.cn.rongnav.com;a2e0.cn.rongcfg.com",
             object : RongIMClient.ConnectCallback() {
                 override fun onSuccess(p0: String?) {
+                    //连接成功
                     Log.e("2222222", "onSuccess$p0")
-                    RongCallKit.onViewCreated()
+//                    RongCallKit.onViewCreated()
                 }
 
-                override fun onError(p0: RongIMClient.ConnectionErrorCode?) {
-                    Log.e("2222222", p0.toString())
+                override fun onError(errorCode: RongIMClient.ConnectionErrorCode?) {
+                    if(errorCode!! == RongIMClient.ConnectionErrorCode.RC_CONN_TOKEN_INCORRECT) {
+                        //从 APP 服务获取新 token，并重连
+                    } else {
+                        //无法连接 IM 服务器，请根据相应的错误码作出对应处理
+                    }
                 }
 
                 override fun onDatabaseOpened(p0: RongIMClient.DatabaseOpenStatus?) {
+                    //消息数据库打开，可以进入到主页面
                     Log.e("2222222", p0.toString())
                 }
             })

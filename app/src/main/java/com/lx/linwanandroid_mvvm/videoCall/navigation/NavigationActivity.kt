@@ -6,9 +6,12 @@ import com.lx.linwanandroid_mvvm.base.BaseActivity
 import com.lx.linwanandroid_mvvm.ui.login.LoginActivity
 import io.rong.callkit.RongCallKit
 import io.rong.imkit.RongIM
+import io.rong.imkit.utils.RouteUtils
 import io.rong.imlib.RongIMClient
 import io.rong.imlib.RongIMClient.ConnectCallback
 import kotlinx.android.synthetic.main.activity_trtc_navigation.*
+import kotlinx.android.synthetic.main.toolbar.*
+import java.security.AccessController.getContext
 
 
 /**
@@ -31,8 +34,19 @@ class NavigationActivity: BaseActivity(){
             adapter = mAdapter
         }
         mAdapter.setOnItemClickListener { adapter, view, position ->
-            val intent = Intent(this@NavigationActivity, list[position].mTargetClass)
-            startActivity(intent )
+//            val intent = Intent(this@NavigationActivity, list[position].mTargetClass)
+//            startActivity(intent )
+            when(position){
+                0 -> {
+                    RouteUtils.routeToConversationListActivity(this, "");
+                }
+            }
+        }
+        tvTitle.text = "融云RTC"
+        toolbar.run {
+            setSupportActionBar(this)
+            supportActionBar?.setDisplayHomeAsUpEnabled(true)
+            setNavigationOnClickListener { finish() }
         }
     }
 
