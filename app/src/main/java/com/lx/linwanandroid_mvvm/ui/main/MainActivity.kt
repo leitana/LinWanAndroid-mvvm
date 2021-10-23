@@ -13,6 +13,7 @@ import com.lx.linwanandroid_mvvm.audioRecord.AudioActivity
 import com.lx.linwanandroid_mvvm.base.BaseVMActivity
 import com.lx.linwanandroid_mvvm.databinding.ActivityHomeBinding
 import com.lx.linwanandroid_mvvm.model.bean.Title
+import com.lx.linwanandroid_mvvm.pic.PicActivity
 import com.lx.linwanandroid_mvvm.ui.main.home.HomeFragment
 import com.lx.linwanandroid_mvvm.ui.main.knowledge.KnowledgeTreeFragment
 import com.lx.linwanandroid_mvvm.utils.StatusBarUtil
@@ -201,6 +202,11 @@ class MainActivity: BaseVMActivity(){
 
                 R.id.nav_videoPlay -> {
                     Intent(this@MainActivity, SimplePlayerActivity::class.java).run {
+                        startActivity(this)
+                    }
+                }
+                R.id.nav_pic -> {
+                    Intent(this@MainActivity, PicActivity::class.java).run {
                         startActivity(this)
                     }
                 }

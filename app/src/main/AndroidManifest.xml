@@ -47,6 +47,7 @@
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize|uiMode"
             android:theme="@style/Theme.AppCompat.Full" />
         <activity android:name=".videoCall.navigation.RongCallActivity"/>
+        <activity android:name=".pic.PicActivity"/>
 
         <provider
             android:name=".utils.ContextProvider"
