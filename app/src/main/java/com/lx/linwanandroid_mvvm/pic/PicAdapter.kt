@@ -16,9 +16,9 @@ import com.lx.linwanandroid_mvvm.utils.ImageLoader
  * @author linxiao
  * @data Created in 2021/10/23
  */
-class PicAdapter: BaseQuickAdapter<PicData, BaseViewHolder>(R.layout.item_image) {
-    override fun convert(holder: BaseViewHolder, item: PicData) {
-        holder.getView<TextView>(R.id.posTxt).text = item.id.toString()
-        ImageLoader.load(context, item.url, holder.getView<ImageView>(R.id.imageView))
+class PicAdapter: BaseQuickAdapter<String, BaseViewHolder>(R.layout.item_image) {
+    override fun convert(holder: BaseViewHolder, item: String) {
+//        holder.getView<TextView>(R.id.posTxt).text = item.id.toString()
+        ImageLoader.load(context, item, holder.getView<ImageView>(R.id.imageView))
     }
 }

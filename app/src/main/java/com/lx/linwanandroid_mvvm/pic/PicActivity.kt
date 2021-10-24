@@ -1,12 +1,18 @@
 package com.lx.linwanandroid_mvvm.pic
 
+import android.graphics.Color
 import androidx.recyclerview.widget.GridLayoutManager
 import com.github.iielse.imageviewer.ImageViewerBuilder
 import com.github.iielse.imageviewer.core.DataProvider
+import com.hitomi.tilibrary.style.index.NumberIndexIndicator
+import com.hitomi.tilibrary.style.progress.ProgressPieIndicator
+import com.hitomi.tilibrary.transfer.TransferConfig
+import com.hitomi.tilibrary.transfer.Transferee
 import com.lx.linwanandroid_mvvm.R
 import com.lx.linwanandroid_mvvm.base.BaseVMActivity
 import com.lx.linwanandroid_mvvm.databinding.ActivityPicBinding
 import com.lx.linwanandroid_mvvm.pic.TransitionViewsRef.KEY_MAIN
+import com.vansz.glideimageloader.GlideImageLoader
 
 /**
  * @title：PicActivity
@@ -22,6 +28,10 @@ class PicActivity: BaseVMActivity() {
 
     private val list: MutableList<PicData> = mutableListOf()
 
+    private val urlList: MutableList<String> = mutableListOf()
+
+    var transferee: Transferee? = null
+
     var loadAllAtOnce = false
 
     override fun initView() {
@@ -30,23 +40,57 @@ class PicActivity: BaseVMActivity() {
             binding.picRecyclerView.layoutManager = GridLayoutManager(this@PicActivity, 3)
             binding.picRecyclerView.adapter = picAdapter
         }
-        picAdapter.setList(list)
+        picAdapter.setList(urlList)
+
+        urlList.addAll(image.toList())
+        picAdapter.setList(urlList)
         picAdapter.setOnItemClickListener { adapter, view, position ->
-            val builder = ImageViewerBuilder(
-                context = this,
-                initKey = list[position].id, // 用于定位被点击缩略图变化大图后初始化所在位置.以此来执行过渡动画.
-                dataProvider = provideViewerDataProvider { list }, // 浏览数据源的提供者.支持一次性给全数据或分页加载.
-                imageLoader = MyImageLoader(), // 实现对数据源的加载.支持自定义加载数据类型，加载方案
-                transformer = MyTransformer(KEY_MAIN) // 以photoId为标示，设置过渡动画的'配对'.
-            )
-            builder.show()
+//            val builder = ImageViewerBuilder(
+//                context = this,
+//                initKey = list[position].id, // 用于定位被点击缩略图变化大图后初始化所在位置.以此来执行过渡动画.
+//                dataProvider = provideViewerDataProvider { list }, // 浏览数据源的提供者.支持一次性给全数据或分页加载.
+//                imageLoader = MyImageLoader(), // 实现对数据源的加载.支持自定义加载数据类型，加载方案
+//                transformer = MyTransformer(KEY_MAIN) // 以photoId为标示，设置过渡动画的'配对'.
+//            )
+//            builder.show()
+
+            val transferee = Transferee.getDefault(this)
+            val config = TransferConfig.build()
+//                .setSourceImageList(sourceUrlList) // 资源 url 集合, String 格式
+                .setSourceUrlList(urlList) // 资源 uri 集合， Uri 格式
+                .setMissPlaceHolder(R.drawable.ic_empty_photo) // 资源加载前的占位图
+                .setErrorPlaceHolder(R.drawable.ic_empty_photo) // 资源加载错误后的占位图
+                .setProgressIndicator(ProgressPieIndicator()) // 资源加载进度指示器, 可以实现 IProgressIndicator 扩展
+                .setIndexIndicator(NumberIndexIndicator()) // 资源数量索引指示器，可以实现 IIndexIndicator 扩展
+                .setImageLoader(GlideImageLoader.with(getApplicationContext())) // 图片加载器，可以实现 ImageLoader 扩展
+                .setBackgroundColor(Color.parseColor("#000000")) // 背景色
+                .setDuration(300) // 开启、关闭、手势拖拽关闭、显示、扩散消失等动画时长
+                .setOffscreenPageLimit(2) // 第一次初始化或者切换页面时预加载资源的数量，与 justLoadHitImage 属性冲突，默认为 1
+//                .setCustomView(customView) // 自定义视图，将放在 transferee 的面板上
+                .setNowThumbnailIndex(position) // 缩略图在图组中的索引
+                .enableJustLoadHitPage(true) // 是否只加载当前显示在屏幕中的的资源，默认关闭
+                .enableDragClose(true) // 是否开启下拉手势关闭，默认开启
+                .enableDragHide(false) // 下拉拖拽关闭时，是否先隐藏页面上除主视图以外的其他视图，默认开启
+                .enableDragPause(false) // 下拉拖拽关闭时，如果当前是视频，是否暂停播放，默认关闭
+                .enableHideThumb(false) // 是否开启当 transferee 打开时，隐藏缩略图, 默认关闭
+                .enableScrollingWithPageChange(false) // 是否启动列表随着页面的切换而滚动你的列表，默认关闭
+//                .setOnLongClickListener(new Transferee.OnTransfereeLongClickListener() { // 长按当前页面监听器
+//                    @Override
+//                    public void onLongClick(ImageView imageView, String imageUri, int pos) {
+//                        saveImageFile(imageUri); // 使用 transferee.getFile(imageUri) 获取缓存文件保存，视频不支持
+//                    }
+//                })
+//                .bindImageView(imageView, source) // 绑定一个 ImageView, 所有绑定方法只能调用一个
+//                .bindListView(listView, R.id.iv_thumb) // 绑定一个 ListView， 所有绑定方法只能调用一个
+                .bindRecyclerView(binding.picRecyclerView, R.id.imageView)  // 绑定一个 RecyclerView， 所有绑定方法只能调用一个
+            transferee.apply(config).show()
         }
     }
 
     override fun initData() {
-        var id = 0L
-        list.addAll(image.map { PicData(id = id++, url = it) })
-        picAdapter.setList(list)
+//        var id = 0L
+//        list.addAll(image.map { PicData(id = id++, url = it) })
+//        picAdapter.setList(list)
     }
 
     override fun startObserve() {
@@ -54,7 +98,10 @@ class PicActivity: BaseVMActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        TransitionViewsRef.releaseTransitionViewRef(KEY_MAIN)
+//        TransitionViewsRef.releaseTransitionViewRef(KEY_MAIN)
+        if (transferee != null) {
+            transferee!!.destroy()
+        }
     }
 
     // 数据提供者 一次加载 or 分页
